@@ -12,8 +12,8 @@ require("./models/rides");
 // deployment requirements
 const compression = require('compression');
 const helmet = require('helmet');
-app.use(compression());
-app.use(helmet());
+server.use(compression());
+server.use(helmet());
 
 // project config
 server.set('view engine','ejs');
@@ -64,7 +64,8 @@ server.use('/form',formRouter);
 
 
 // server configuration
-server.listen(9090);
+var port = process.env.PORT || 9000;
+server.listen(port);
 
 // API consuming
 // Request.get("http://localhost:9090/", (error, response, body) => {
