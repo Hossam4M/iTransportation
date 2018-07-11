@@ -1,0 +1,75 @@
+<% include ../layout/header.ejs %>
+
+<div class="container">
+
+  <div class="col-md-12 text-center mb-4">
+    <img id="preview" src="/images/<%= car.image %>" width="40%" class="img-fluid" alt="Responsive image">
+  </div>
+
+  <form action="" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+
+      <%# Car Model %>
+      <div class="col-md-6 offset-md-3 mb-3 text-center">
+        <label>Car Model</label>
+        <input name="model" type="text" class="form-control" value="<%= car.model %>" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <%# number of persons %>
+      <div class="col-md-4 mb-3">
+        <label>number of persons</label>
+        <div class="input-group">
+          <input name="numberOfPersons" type="number" class="form-control " min="0" value="<%= car.numberOfPersons %>" required>
+        </div>
+      </div>
+
+    <%# number of luggage %>
+      <div class="col-md-4 mb-3">
+        <label>number of Luggage</label>
+        <input name="numberOfLuggage" type="number" class="form-control" min="0" value="<%= car.numberOfLuggage %>" required>
+      </div>
+
+      <%# charge %>
+      <div class="col-md-4 mb-3">
+        <label>Charge per Mile</label>
+        <input name="perMile" type="number" class="form-control" min="0" value="<%= car.charge.perMile.main %>" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+
+      <!-- vehicle fee -->
+      <div class="col-md-4 mb-3">
+        <label>Vehicle Fee</label>
+        <input name="vehicleFee" type="number" class="form-control" min="0" value="<%= car.charge.vehicleFee %>" required>
+      </div>
+
+      <div class="col-md-8">
+        <label>Car Image</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Upload</span>
+            </div>
+            <div class="custom-file">
+                <input id="imageUpload" type="file" name="image" class="custom-file-input">
+                <label for="files" class="custom-file-label" id="filename">Upload profile image</label>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <%# upload image %>
+
+
+      <div class="text-center mb-3">
+        <button class="btn btn-lg btn-dark" type="submit">Update</button>
+      </div>
+
+
+  </form>
+</div>
+
+<% include ../layout/footer.ejs %>

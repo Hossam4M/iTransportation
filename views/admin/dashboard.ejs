@@ -1,0 +1,38 @@
+<% include ../layout/header.ejs %>
+
+<div class="container-fluid">
+
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col"># Conf</th>
+      <th scope="col">PU Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Passenger</th>
+      <th scope="col">Vehicle Model</th>
+      <th scope="col">Total</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% rides.forEach((ride,index)=>{ %>
+      <tr id="<%= ride._id %>" class="ride">
+        <th scope="row"><%= ride.confirmation %></th>
+        <td><%= ride.rideInfo.pDate %></td>
+        <td><%= ride.rideInfo.pTime %></td>
+        <td><%= ride.customerInfo.lastname %> , <%= ride.customerInfo.firstname %></td>
+        <td><%= ride.car.model %></td>
+        <td><%= ride.totalCost %></td>
+        <td class="<% if(ride.status == 'Approved'){ %>text-success<% }else if(ride.status == 'Rejected'){ %> text-danger <% } %>">
+          <%= ride.status %>
+        </td>
+      </tr>
+    <% }); %>
+
+  </tbody>
+</table>
+
+<% include ../layout/footer.ejs %>

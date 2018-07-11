@@ -1,0 +1,40 @@
+<% include ../layout/header.ejs %>
+
+<div class="container-fluid">
+
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">UserName</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Mobile Number</th>
+      <th scope="col">Email</th>
+      <th scope="col">Associated Car</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% drivers.forEach((driver)=>{ %>
+      <tr id="<%= driver._id %>" class="editDriver">
+        <th scope="row"><%= driver.username %></th>
+        <td><%= driver.firstname %></td>
+        <td><%= driver.lastname %></td>
+        <td><%= driver.mobileNumber %></td>
+        <td><%= driver.email %></td>
+        <td><%= driver.model %></td>
+      </tr>
+    <% }); %>
+
+  </tbody>
+</table>
+
+<div class="col-md-12 text-center mt-5">
+  <a href="/drivers/add">
+    <button class="btn btn-dark btn-lg" type="button" name="button">Add Driver</button>
+  </a>
+</div>
+
+<% include ../layout/footer.ejs %>

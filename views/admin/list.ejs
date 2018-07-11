@@ -1,0 +1,289 @@
+<% include ../layout/header.ejs %>
+<div class="container">
+
+<form class="" action="" method="post">
+<!-- Ride Info -->
+
+  <input type="text" name="confirmation" value="<%= ride.confirmation %>" hidden readonly>
+
+  <span class="d-block p-2 bg-light text-primary mb-3">
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-check">
+          <div class="row">
+            <div class="col-md-6 text-primary">
+              <h5>Ride Details</h5>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Pick-Up Location</th>
+        <td class="col-md-9">
+          <input name="pLocation" class="form-control" type="text" value="<%= ride.rideInfo.pLocation%>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Drop-Off Location</th>
+        <td>
+          <input name="dLocation" class="form-control" type="text" value="<%= ride.rideInfo.dLocation%>">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Pick-Up Date</th>
+        <td>
+          <input name="pDate" class="form-control col-md-8" type="date" value="<%= ride.rideInfo.pDate%>">
+        </td>
+        <th scope="row">Pick-Up Time</th>
+        <td>
+          <input name="pTime" class="form-control" type="time" value="<%= ride.rideInfo.pTime%>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">number Of Persons</th>
+        <td>
+          <input name="numberOfPersons" class="form-control" type="number" value="<%= ride.rideInfo.numberOfPersons%>">
+        </td>
+        <th scope="row">number Of Luggage</th>
+        <td>
+          <input name="numberOfLuggage" class="form-control" type="number" value="<%= ride.rideInfo.numberOfLuggage%>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Distance(mile)</th>
+        <td>
+          <input id="distance" name="distance" class="form-control" type="number" value="<%= ride.rideInfo.distance%>">
+        </td>
+        <th scope="row">Service Type</th>
+        <td>
+          <input name="serviceType" class="form-control" type="text" value="<%= ride.rideInfo.serviceType%>">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Select Car -->
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Selected Car</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <table class="table">
+      <tbody>
+        <input id="carId" type="text" name="carId" value="<%= ride.car._id%>" hidden readonly>
+        <tr>
+          <th scope="row">Car Model</th>
+          <td>
+            <input name="model" class="form-control" type="text" value="<%= ride.car.model%>">
+          </td>
+          <th scope="row">Base Charge Per Mile($)</th>
+          <td>
+            <input id="perMile" name="perMile" class="form-control carCost" type="number" value="<%= ride.car.charge.perMile.main%>">
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row">Vehicle Fee($)</th>
+          <td>
+            <input id="vehicleFee" name="vehicleFee" class="form-control carCost" type="number" value="<%= ride.car.charge.vehicleFee%>">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  <!-- client personal information -->
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Client Personal Information</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">First Name</th>
+          <td>
+            <input name="firstname" class="form-control" type="text" value="<%= ride.customerInfo.firstname%>">
+          </td>
+          <th scope="row">Last Name</th>
+          <td>
+            <input name="lastname" class="form-control" type="text" value="<%= ride.customerInfo.lastname%>">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td>
+            <input name="email" class="form-control" type="email" value="<%= ride.customerInfo.email%>">
+          </td>
+          <th scope="row">Mobile Number</th>
+          <td>
+            <input name="mobileNumber" class="form-control" type="text" value="<%= ride.customerInfo.mobileNumber%>">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Comments</th>
+          <td>
+            <input name="comment" class="form-control" type="text" value="<%= ride.comment %>">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  <!-- Payment details -->
+  <span class="d-block p-2 bg-light text-primary mb-3">
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-check">
+          <div class="row">
+            <div class="col-md-6 text-primary">
+              <h5>Payment Details</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Credit Card Number</th>
+        <td>
+          <input name="number" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.number %>">
+        </td>
+        <th scope="row">Expiration Date</th>
+        <td>
+          <input name="eDate" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.eDate %>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Card Holder</th>
+        <td>
+          <input name="holder" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.holder %>">
+        </td>
+        <th scope="row">CVC</th>
+        <td>
+          <input name="cvc" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.cvc %>">
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- Trip Cost In Detail  -->
+  <span class="d-block p-2 bg-light text-primary mb-3">
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="col-md-6 text-primary">
+          <h5>
+            Details Of Total Cost
+          </h5>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Per Mile($)</th>
+        <td>
+          <input id="costPerMile" name="costPerMile" class="form-control col-md-3 cost" type="number" value="<%= ride.cost.perMile%>">
+        </td>
+        <th scope="row">Vehicle Fee($)</th>
+        <td>
+          <input id="costVehicleFee" name="costVehicleFee" class="form-control col-md-3 cost" type="number" value="<%= ride.cost.vehicleFee%>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Discount($)</th>
+        <td>
+          <input id="discount" name="discount" class="form-control col-md-3 cost" type="number" value="<%= ride.cost.discount%>">
+        </td>
+        <th scope="row">Others($)</th>
+        <td>
+          <input id="others" name="others" class="form-control col-md-3 cost" type="number" value="<%= ride.cost.others%>">
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-bold">Total Grand</th>
+        <td>
+          <input id="totalCost" name="totalCost" class="form-control col-md-3 cost" type="text" name="" value="<%= ride.totalCost%>" readonly>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- Additional Information  -->
+  <span class="d-block p-2 bg-light text-primary mb-3">
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="col-md-6 text-primary">
+          <h5>
+            Additional Information
+          </h5>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Associated Driver</th>
+        <td class="col-md-4">
+          <button id="default" class="btn btn-info driver" type="button" name="button">Default</button>
+          <button id="other" class="btn btn-info driver" type="button" name="button">Other</button>
+          <input id="driver" type="text" name="driver" class="form-control" value="" hidden>
+        </td>
+        <th scope="row">Ride Status</th>
+        <td class="col-md-4">
+          <select name="status" class="form-control">
+            <option active value="pending">Pending</option>
+            <option class="text-success" value="Approved">Approved</option>
+            <option class="text-danger" value="Rejected">Rejected</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- selecting Status -->
+  <div class="col-md-12 text-center">
+    <button class="btn btn-dark mb-5 btn-lg" type="submit" name="button">Save</button>
+  </div>
+</form>
+
+</div>
+<% include ../layout/footer.ejs %>

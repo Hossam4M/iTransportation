@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <style media="screen">
+      .container{
+        width: 70%;
+        text-align:center;
+        margin: auto;
+      }
+
+      strong{
+          text-align: left;
+      }
+      .answer,.center{
+          text-align: center;
+      }
+      small{
+          float: right;
+          font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      }
+
+      table{
+          border-collapse: collapse;
+      }
+      body{
+          padding: 0px;
+      }
+      .line,h3,th{
+          margin: 0px;
+          padding: 0px;
+      }
+      .feesTable{
+          align-content: center;
+      }
+
+      .costContainer{
+        width: 50%
+      }
+
+    </style>
+    <title>iTransportation</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="center">
+      <img src="https://ci3.googleusercontent.com/proxy/-iNHQPVPxnDGXVHkli2nYfPMLmXZJLfCAizuIK99KR6MycliFG8U6Pp0IS-47zHyVG55mJnUoRyIpGRR-TtLDaw3QEaHGNjH5Ph8aSE7pnGYdJQRfT2yI4Od04TiLmz89xpp1SUW=s0-d-e1-ft#https://manage.mylimobiz.com/shared/files%5C43201710119_DaHTbBRfOp8A7PwdIYJn.jpg" width="50%" alt="">
+      <h2>Confirmation #<%= confirmation %></h2>
+       <hr>
+       <p>Thank You for traveling with iTransportation! Below please find your confirmation. If any of the information appears to be incorrect, please contact our office immediately to correct it.</p>
+       <hr>
+    </div>
+
+    <h3><strong>Ride Details</strong></h3>
+    <table border="0">
+        <tr>
+            <th><strong>Method:</strong></th>
+            <td><p class="answer"><%= serviceType %></p></td>
+        </tr>
+        <tr>
+            <th><strong>Transaction Amount:</strong></th>
+            <td><p class="answer"><%= totalCost %></p></td>
+        </tr>
+        <tr>
+            <th><strong>Passenger:</strong></th>
+            <td><p class="answer"><%= name %></p></td>
+        </tr>
+        <tr>
+            <th><strong>Trip Confirmation:</strong></th>
+            <td><p class="answer"><%= confirmation %></p></td>
+        </tr>
+        <tr>
+            <th><strong>Trip Date & Time:</strong></th>
+            <td><p class="answer">	<%= date %> @ <%= time %> </p></td>
+        </tr>
+        <tr>
+            <th><strong>Pick-up Location:</strong></th>
+            <td><p class="answer"><%= pLocation %></p></td>
+        </tr>
+        <tr>
+            <th><strong>Drop-off Location:</strong></th>
+            <td><p class="answer"><%= dLocation %></p></td>
+        </tr>
+    </table>
+
+    <hr>
+    <tr>
+      <h3><strong>Fees & Charges Details</strong></h3>
+      <div class="costContainer">
+        <tr>
+          <table border="0">
+            <tr>
+                <th><strong>Per Mile : <strong></th>
+                <td class="answer"><p class="answer"> <%= cost.perMile%> </p></td>
+            </tr>
+            <tr>
+                <th><strong>Vehicle Fee : <strong></th>
+                <td class="answer"><p class="answer"><%= cost.vehicleFee %></p></td>
+            </tr>
+            <tr>
+                <th><strong>Discount : <strong></th>
+                <td class="answer"><p ><%= cost.discount %></p></td>
+            </tr>
+            <tr>
+                <th><strong>Others : <strong></th>
+                <td class="answer"><p ><%= cost.others %></p></td>
+            </tr>
+            <tr>
+                <th><strong>Total Cost : <strong></th>
+                <td class="answer"><p ><%= totalCost %></p></td>
+            </tr>
+          </table>
+        </tr>
+      </div>
+    </tr>
+
+  </div>
+
+
+</body>
+</html>

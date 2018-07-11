@@ -1,0 +1,159 @@
+<% include ../layout/header.ejs %>
+
+<div class="container">
+
+  <form action="" method="post" enctype="">
+
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Step 1 : Ride Info</h5>
+              </div>
+              <div class="col-md-6">
+                <h5 id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th scope="row">Pick-Up Location</th>
+          <td><%= rideInfoData.pLocation%></td>
+          <th scope="row">Drop-Off Location</th>
+          <td><%= rideInfoData.dLocation%></td>
+        </tr>
+        <tr>
+          <th scope="row">Pick-Up Date & Time</th>
+          <td><%= rideInfoData.pDate%> <%= rideInfoData.pTime%></td>
+          <th scope="row">number Of Persons & luggage</th>
+          <td><%= rideInfoData.numberOfPersons%> - <%= rideInfoData.numberOfLuggage%></td>
+        </tr>
+        <tr>
+          <th scope="row">Distance(mile)</th>
+          <td><%= rideInfoData.distance%></td>
+          <th scope="row">Service Type</th>
+          <td><%= rideInfoData.serviceType%></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Step 2 : Select your Car</h5>
+              </div>
+              <div class="col-md-6">
+                <h5 id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th scope="row">Car Model</th>
+          <td><%= carInfoData.model %></td>
+          <th scope="row">Base Charge Per Mile</th>
+          <td>$<%= carInfoData.charge.perMile.main %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <label id="clientData" class="form-check-label">
+              <h5>Step 3 : Payment Data</h5>
+            </label>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <div class="form-row text-center">
+      <div class="col-md-12">
+          <h6>The total Cost of Trip</h6>
+      </div>
+    </div>
+
+    <div class="form-row text-center mb-3 text-info">
+      <div class="col-md-12">
+          <span class="display-3">$<%= cost %></span>
+      </div>
+    </div>
+
+    <div class="form-row text-center mb-2">
+      <div class="col-md-12">
+          <h3>Please fill the final details</h3>
+      </div>
+    </div>
+
+    <div class="form-row">
+
+        <%# firstname %>
+      <div class="col-md-6 mb-3">
+        <label>First name</label>
+        <input name="firstname" type="text" class="form-control" required/>
+      </div>
+
+      <%# lastname %>
+      <div class="col-md-6 mb-3">
+        <label>Last name</label>
+        <input name="lastname" type="text" class="form-control" value="" required>
+      </div>
+
+    </div>
+
+    <%# email %>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label>Email <i class="fa fa-envelope" aria-hidden="true"></i></label>
+        <input name="email" type="email" class="form-control" required>
+        <div class="invalid-feedback">
+          Please provide a valid mail
+        </div>
+      </div>
+
+      <%# mobile number %>
+      <div class="col-md-3 mb-3">
+        <label>Phone Number <i class="fa fa-mobile" aria-hidden="true"></i></label>
+        <input id="phone" name="mobileNumber" type="tel" class="form-control" required>
+        <div class="invalid-feedback">
+          Please provide a valid number.
+        </div>
+      </div>
+    </div>
+
+    <% include ../form/creditCard.ejs %>
+
+    <div class="form-row">
+      <h4>Other Comments <i class="fa fa-comments" aria-hidden="true"></i></h4>
+      <textarea class="form-control mb-3" name="comment" rows="8" cols="80" placeholder="write any thing in your mind"></textarea>
+    </div>
+
+    <div class="col-md-12 text-center">
+      <button id="GoRide" type="submit" class="btn btn-primary btn-lg mb-3" disabled>Go On Ride</button>
+    </div>
+
+  </form>
+</div>
+
+<% include ../layout/footer.ejs %>

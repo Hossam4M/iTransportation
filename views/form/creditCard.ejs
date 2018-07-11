@@ -1,0 +1,40 @@
+<div class="form-row">
+
+  <%# credit number %>
+  <div class="col-md-6 mb-3">
+    <label>Credit Card Number <i class="fa fa-credit-card-alt" aria-hidden="true"></i></label>
+    <input id="ccnum" name="ccnum" type="text" class="form-control creditInput" required/>
+    <div><small>type: <strong id="ccnum-type">invalid</strong></small></div>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <label>Card Holder</label>
+    <input name="holder" type="text" class="form-control" required/>
+  </div>
+
+</div>
+
+<div class="form-row">
+
+  <div class="col-md-3 mb-3">
+    <label>Expiration Date</label>
+    <input id="expiry" type="text" name="eDate" class="form-control creditInput" placeholder="-- / ----" size="7" type="tel" required>
+  </div>
+
+  <div class="col-md-3 mb-3">
+    <label>CVC</label>
+    <input id="cvc" type="text" name="cvc" class="form-control creditInput" placeholder="---" size="4" type="tel" required>
+  </div>
+
+
+  <div class="col-md-3 mb-3">
+    <div class="mb-2">
+      <label></label>
+    </div>
+    <button id="validation" class="btn btn-dark" type="button" name="result" class="form-control" readonly>validate</button>
+  </div>
+
+</div>
+
+<script type="text/javascript" src="/js/jquery.payform.js"></script>
+<script type="text/javascript" src="/js/creditCard.js"></script>

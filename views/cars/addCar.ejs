@@ -1,0 +1,100 @@
+<% include ../layout/header.ejs %>
+
+<div class="container">
+
+
+<% if(msg != ""){ %>
+    <div class="alert <% if(msg[0] == 'Done'){ %>alert-success<% }else{ %> alert-danger<% } %> " role="alert">
+        <%= msg  %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<% } %>
+
+<div class="col-md-12 text-center">
+  <img id="preview" src="/images/car.png" width="25%" class="img-fluid" alt="Responsive image">
+</div>
+
+<form action="" method="post" enctype="multipart/form-data">
+  <div class="form-row">
+
+    <%# Car Model %>
+    <div class="col-md-6 offset-md-3 mb-3 text-center">
+      <label>Car Model</label>
+      <input name="model" type="text" class="form-control" value="" required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="form-row">
+    <%# number of persons %>
+    <div class="col-md-4 mb-3">
+      <label>number of persons</label>
+      <div class="input-group">
+        <input name="numberOfPersons" type="number" class="form-control " min="0" value="1" required>
+        <div class="invalid-feedback">
+          Please choose a username.
+        </div>
+      </div>
+    </div>
+
+  <%# number of luggage %>
+    <div class="col-md-4 mb-3">
+      <label>number of Luggage</label>
+      <input name="numberOfLuggage" type="number" class="form-control" min="0" value="0" required>
+      <div class="invalid-feedback">
+        Please provide a valid mail
+      </div>
+    </div>
+
+    <%# charge %>
+    <div class="col-md-4 mb-3">
+      <label>Charge per Mile</label>
+      <input name="perMile" type="number" class="form-control" min="0" required>
+      <div class="invalid-feedback">
+        Please provide a valid charge.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+
+    <!-- vehicle fee -->
+    <div class="col-md-4 mb-3">
+      <label>Vehicle Fee</label>
+      <input name="vehicleFee" type="number" class="form-control" min="0" required>
+      <div class="invalid-feedback">
+        Please provide a valid charge.
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <label>Car Image</label>
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+              <span class="input-group-text">Upload</span>
+          </div>
+          <div class="custom-file">
+              <input id="imageUpload" type="file" name="image" class="custom-file-input">
+              <label for="files" class="custom-file-label" id="filename">Upload profile image</label>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# upload image %>
+
+
+    <div class="text-center mb-3">
+      <button class="btn btn-lg btn-dark" type="submit">Add Car</button>
+    </div>
+
+
+</form>
+
+<% include ../layout/footer.ejs %>

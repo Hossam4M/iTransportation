@@ -1,0 +1,65 @@
+<% include ../layout/header.ejs %>
+
+<div class="container">
+
+  <form action="" method="post" enctype="multipart/form-data">
+
+    <!-- ride info -->
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <label class="form-check-label" for="exampleRadios1">
+              Step 1 : Ride Info
+            </label>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <div class="" id="first">
+      <% include ../form/firstStep.ejs %>
+    </div>
+
+
+    <!-- car select -->
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <label id="selectCar" class="form-check-label">
+              Step 2 : Select Your Car
+            </label>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <div id="second">
+      <% include ../form/secondStep.ejs %>
+    </div>
+
+
+    <!-- client Data -->
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <label id="clientData" class="form-check-label">
+              Step 3 : Client Data
+            </label>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <div id="third">
+      <% include ../form/ThirdStep.ejs %>
+    </div>
+
+
+  </form>
+
+
+
+<% include ../layout/footer.ejs %>
