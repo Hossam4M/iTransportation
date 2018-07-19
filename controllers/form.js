@@ -37,9 +37,10 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
     pLocation:request.body.pLocation,
     dLocation:request.body.dLocation,
     distance:parseFloat(request.body.distance),
+    stops:request.body.stops,
     numberOfPersons:request.body.numberOfPersons,
     numberOfLuggage:request.body.numberOfLuggage,
-    handicap:true
+    handicap:request.body.handicap||'false',
   }
   request.session.rideInfo = rideInfo;
   response.redirect('/form/newRide/2');
@@ -59,7 +60,7 @@ router.get('/newRide/2',function(request,response){
 
 router.post('/newRide/2',urlEncodedMid,function(request,response){
 
-  let carsDB = carModel.find({carId:request.body.carId},(err,cars)=>{
+  let carsDB = carModel.find({'model':request.body.model},(err,cars)=>{
     request.session.carInfo = cars[0];
 
     let perMile = parseFloat(request.session.carInfo.charge.perMile.main) * parseFloat(request.session.rideInfo.distance);
@@ -95,7 +96,8 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
     creditCard:{
       number:request.body.number,
       holder:request.body.holder,
-      eDate:request.body.eDate
+      eDate:request.body.eDate,
+      cvc:request.body.cvc
     }
   }
 

@@ -6,7 +6,7 @@ const urlEncodedMid = bodyParser.urlencoded();
 
 const mongoose = require('mongoose');
 const driverModel = mongoose.model('drivers');
-// const carModel = mongoose.model('cars');
+const carModel = mongoose.model('cars');
 let ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/add',(request,response)=>{

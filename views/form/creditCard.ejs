@@ -3,7 +3,7 @@
   <%# credit number %>
   <div class="col-md-6 mb-3">
     <label>Credit Card Number <i class="fa fa-credit-card-alt" aria-hidden="true"></i></label>
-    <input id="ccnum" name="ccnum" type="text" class="form-control creditInput" required/>
+    <input id="ccnum" name="number" type="text" class="form-control creditInput" required/>
     <div><small>type: <strong id="ccnum-type">invalid</strong></small></div>
   </div>
 
@@ -27,11 +27,9 @@
   </div>
 
 
-  <div class="col-md-3 mb-3">
-    <div class="mb-2">
-      <label></label>
-    </div>
-    <button id="validation" class="btn btn-dark" type="button" name="result" class="form-control" readonly>validate</button>
+  <div class="col-md-3 mb-3 text-center">
+    <label>Credit Status</label>
+    <h4 id="validation" name="result">none</h4>
   </div>
 
 </div>

@@ -4,7 +4,8 @@ const server = express();
 
 // Startup database connection
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/itransportation');
+// mongoose.connect('mongodb://localhost:27017/itransportation');
+mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportation');
 require("./models/cars");
 require("./models/drivers");
 require("./models/rides");
@@ -44,6 +45,7 @@ function authMid(request,response,next) {
   }
 }
 
+server.use('/admin/dashboard',authMid);
 server.use('/admin/list',authMid);
 server.use('/admin/ride',authMid);
 server.use('/drivers',authMid);
@@ -66,12 +68,3 @@ server.use('/form',formRouter);
 // server configuration
 var port = process.env.PORT || 9000;
 server.listen(port);
-
-// API consuming
-// Request.get("http://localhost:9090/", (error, response, body) => {
-//     if(error) {
-//         return console.dir(error);
-//     }
-//     let data = JSON.parse(body);
-//     console.log(data.user);
-// });

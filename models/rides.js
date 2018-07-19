@@ -14,9 +14,10 @@ var rides = new Schema({
       pLocation:String,
       dLocation:String,
       distance:Number,
+      stops:Schema.Types.Mixed,
       numberOfPersons:Number,
       numberOfLuggage:Number,
-      handicap:Boolean,
+      handicap:String,
     },
     car:{
       type: Schema.Types.ObjectId,

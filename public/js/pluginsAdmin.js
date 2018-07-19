@@ -32,28 +32,28 @@ $('.carCost,#distance').on('input',()=>{
 });
 
 // showing driver
-$('.driver').click((e)=>{
-  e.preventDefault();
-  let id = $(e.target).attr('id');
-  if (id === 'default') {
-    $.ajax({
-      type : 'POST',
-      url : '/admin/ride/driver',
-      data : {
-        id : $('#carId').val()
-      },
-      success : function (data) {
-        $('.driver').prop('hidden',true);
-        $('#driver').prop('hidden',false);
-        $('#driver').val(data.name);
-      }
-    });
-  } else {
-    $('.driver').prop('hidden',true);
-    $('#driver').prop('hidden',false);
-    $('#driver').val("");
-  }
-});
+// $('.driver').click((e)=>{
+//   e.preventDefault();
+//   let id = $(e.target).attr('id');
+//   if (id === 'default') {
+//     $.ajax({
+//       type : 'POST',
+//       url : '/admin/ride/driver',
+//       data : {
+//         id : $('#carId').val()
+//       },
+//       success : function (data) {
+//         $('.driver').prop('hidden',true);
+//         $('#driver').prop('hidden',false);
+//         $('#driver').val(data.name);
+//       }
+//     });
+//   } else {
+//     $('.driver').prop('hidden',true);
+//     $('#driver').prop('hidden',false);
+//     $('#driver').val("");
+//   }
+// });
 
 // upload image preview
 function readURL(input) {

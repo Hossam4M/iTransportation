@@ -65,12 +65,12 @@
             <p class="card-text"><h2 class="text-center"><%= car.model %></h2></p>
             <img class="card-img-top" src="/images/<%= car.image %>" height="250px" alt="Card image cap">
             <div class="card-body">
-              <h5 class="text-center">$<%= car.charge.perMile.main %>/Mile</h5>
+              <h5 class="text-center">$<%= (car.charge.perMile.main * rideInfoData.distance) + car.charge.vehicleFee %>/Mile</h5>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group"  ml-auto>
                     <button type="button" class="btn btn-sm btn-outline-secondary" disabled><i class="fa fa-briefcase"></i> | <%= car.numberOfPersons %></button>
                 </div>
-                <button id="<%= car.carId %>" type="button" class="btn btn-lg btn-outline-primary submit">Book</button>
+                <button id="<%= car.model %>" type="button" class="btn btn-lg btn-outline-primary submit">Book</button>
                 <div class="btn-group"  ml-auto>
                     <button type="button" class="btn btn-sm btn-outline-secondary" disabled mr-auto><i class="fa fa-users"></i> | <%= car.numberOfLuggage %></button>
                 </div>
@@ -80,7 +80,7 @@
         </div>
       <% }); %>
 
-      <input id="carId" name="carId" type="text" readonly hidden>
+      <input id="model" name="model" type="text" readonly hidden>
 
     </div>
   </form>

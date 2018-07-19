@@ -4,9 +4,44 @@ function initAutocomplete() {
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var map = new google.maps.Map(document.getElementById('map'), {
   center: new google.maps.LatLng(41.8781, -87.6298),
-  zoom: 13,
+  zoom: 4,
   mapTypeId: 'roadmap'
 });
+
+// Cities with extra charge
+// var citymap = {
+//   chicago: {
+//     center: {lat: 41.878, lng: -87.629},
+//     distance: 2714856
+//   },
+//   newyork: {
+//     center: {lat: 40.714, lng: -74.005},
+//     distance: 8405837
+//   },
+//   losangeles: {
+//     center: {lat: 34.052, lng: -118.243},
+//     distance: 3857799
+//   },
+//   vancouver: {
+//     center: {lat: 49.25, lng: -123.1},
+//     distance: 603502
+//   }
+// };
+//
+// for (var city in citymap) {
+//   // Add the circle for this city to the map.
+//   var cityCircle = new google.maps.Circle({
+//     strokeColor: '#FF0000',
+//     strokeOpacity: 0.8,
+//     strokeWeight: 2,
+//     fillColor: '#FF0000',
+//     fillOpacity: 0.35,
+//     map: map,
+//     center: citymap[city].center,
+//     radius: Math.sqrt(citymap[city].distance) * 100
+//   });
+// }
+
 
 // drawing path
 directionsDisplay.setMap(map);
@@ -14,8 +49,6 @@ directionsDisplay.setMap(map);
 var onChangeHandler = function() {
   calculateAndDisplayRoute(directionsService, directionsDisplay);
 };
-// document.getElementById('input').addEventListener('change', onChangeHandler);
-// document.getElementById('input2').addEventListener('change', onChangeHandler);
 
 // Create the search box and link it to the UI element.
 var input = document.getElementById('input');
@@ -36,6 +69,13 @@ map.addListener('bounds_changed', function() {
   searchBox2.setBounds(map.getBounds());
 });
 
+
+
+
+//
+//
+//
+//
 var markers = [];
 // Listen for the event fired when the user selects a prediction and retrieve
 // more details for that place.
@@ -73,7 +113,6 @@ searchBox.addListener('places_changed', function() {
       map: map,
       draggable: true,
       animation: google.maps.Animation.DROP,
-      icon: icon,
       title: place.name,
       position: place.geometry.location
     })
@@ -165,7 +204,6 @@ searchBox2.addListener('places_changed', function() {
      map: map,
      draggable: true,
      animation: google.maps.Animation.DROP,
-     icon: icon,
      title: place.name,
      position: place.geometry.location
    })
@@ -224,9 +262,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       console.log(route.legs[0].distance.text);
       document.getElementById('distance').value = route.legs[0].distance.text;
     } else if (status === 'ZERO_RESULTS') {
-      window.alert('You must input valid locations within USA');
-      $('#input,#input2').attr('value','');
-      $('#distance').attr('value','');
+      window.location.href = '/form/newRide/1'
     } else {
       window.alert('Directions request failed due to ' + status);
     }

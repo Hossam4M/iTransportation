@@ -21,7 +21,8 @@ $(function() {
 
   ccnum.addEventListener('input',updateType);
 
-  result.addEventListener('click', function() {
+  // result.addEventListener('click', function() {
+  $('#ccnum,#expiry,#cvc').on('input', function() {
     var valid     = [],
         expiryObj = payform.parseCardExpiry(expiry.value);
 
@@ -29,16 +30,17 @@ $(function() {
     valid.push(fieldStatus(expiry, payform.validateCardExpiry(expiryObj)));
     valid.push(fieldStatus(cvc,    payform.validateCardCVC(cvc.value, type.innerHTML)));
 
-    if (true) {
+    if (valid.every(Boolean)) {
+    // if (true) {
       $('#GoRide').prop('disabled',false);
-      $('.creditInput').prop('readonly',true);
-      $('#validation').attr('value','valid');
-      $('#validation').removeClass('btn-dark');
-      $('#validation').addClass('btn-success');
-      $('#validation').prop('disabled',true);
+      $('#validation').html('valid <i class="fa fa-check" aria-hidden="true"></i>');
+      $('#validation').removeClass('text-danger');
+      $('#validation').addClass('text-success');
     } else {
-      $('#validation').removeClass('btn-dark');
-      $('#validation').addClass('btn-danger');
+      $('#validation').html('invalid <i class="fa fa-times" aria-hidden="true"></i>');
+      $('#GoRide').prop('disabled',true);
+      $('#validation').removeClass('text-success');
+      $('#validation').addClass('text-danger');
     }
 
   });
