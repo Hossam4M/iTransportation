@@ -10,12 +10,12 @@
           <div class="form-check">
 
             <div class="row">
-              <div class="col-md-6 text-primary">
-                <h5>Step 1 : Ride Info</h5>
+              <div class="col-md-12 text-primary">
+                <h5>Step 1 : Ride Info <span id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <h5 id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div>
+              </div> -->
             </div>
 
           </div>
@@ -28,18 +28,24 @@
         <tr>
           <th scope="row">Pick-Up Location</th>
           <td><%= rideInfoData.pLocation%></td>
+        </tr>
+        <tr>
           <th scope="row">Drop-Off Location</th>
           <td><%= rideInfoData.dLocation%></td>
         </tr>
         <tr>
           <th scope="row">Pick-Up Date & Time</th>
           <td><%= rideInfoData.pDate%> <%= rideInfoData.pTime%></td>
+        </tr>
+        <tr>
           <th scope="row">number Of Persons & luggage</th>
           <td><%= rideInfoData.numberOfPersons%> - <%= rideInfoData.numberOfLuggage%></td>
         </tr>
         <tr>
           <th scope="row">Distance(mile)</th>
           <td><%= rideInfoData.distance%></td>
+        </tr>
+        <tr>
           <th scope="row">Service Type</th>
           <td><%= rideInfoData.serviceType%></td>
         </tr>
@@ -52,12 +58,12 @@
           <div class="form-check">
 
             <div class="row">
-              <div class="col-md-6 text-primary">
-                <h5>Step 2 : Select your Car</h5>
+              <div class="col-md-12 text-primary">
+                <h5>Step 2 : Select your Car <span id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <h5 id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div>
+              </div> -->
             </div>
 
           </div>
@@ -70,6 +76,8 @@
         <tr>
           <th scope="row">Car Model</th>
           <td><%= carInfoData.model %></td>
+        </tr>
+        <tr>
           <th scope="row">Base Charge Per Mile</th>
           <td>$<%= carInfoData.charge.perMile.main %></td>
         </tr>
