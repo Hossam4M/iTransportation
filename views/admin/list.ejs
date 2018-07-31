@@ -25,7 +25,7 @@
     <tbody>
       <tr>
         <th scope="row">Pick-Up Location</th>
-        <td class="col-md-9">
+        <td>
           <input name="pLocation" class="form-control" type="text" value="<%= ride.rideInfo.pLocation%>">
         </td>
       </tr>
@@ -42,11 +42,11 @@
       <tr>
         <th scope="row">Pick-Up Date</th>
         <td>
-          <input name="pDate" class="form-control col-md-8" type="date" value="<%= ride.rideInfo.pDate%>">
+          <input name="pDate" class="form-control col-md-8" type="text" value="<%= ride.rideInfo.pDate%>">
         </td>
         <th scope="row">Pick-Up Time</th>
         <td>
-          <input name="pTime" class="form-control" type="time" value="<%= ride.rideInfo.pTime%>">
+          <input name="pTime" class="form-control" type="text" value="<%= ride.rideInfo.pTime%>">
         </td>
       </tr>
       <tr>
@@ -261,11 +261,11 @@
     <tbody>
       <tr>
         <th scope="row">Associated Driver</th>
-        <td class="col-md-4">
+        <td>
           <input id="driver" type="text" name="driver" class="form-control" value="">
         </td>
         <th scope="row">Ride Status</th>
-        <td class="col-md-4">
+        <td>
           <select name="status" class="form-control">
             <option active value="pending">Pending</option>
             <option class="text-success" value="Approved">Approved</option>

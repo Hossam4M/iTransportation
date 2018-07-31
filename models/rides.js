@@ -18,6 +18,7 @@ var rides = new Schema({
       numberOfPersons:Number,
       numberOfLuggage:Number,
       handicap:String,
+      childSeat:Schema.Types.Mixed
     },
     car:{
       type: Schema.Types.ObjectId,

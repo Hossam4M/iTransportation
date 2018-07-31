@@ -1,52 +1,24 @@
 var positions = [];
+var positionsFinal = [];
+
+var map;
+var city;
+var wayPoints = [];
+
 function initAutocomplete() {
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
   center: new google.maps.LatLng(41.8781, -87.6298),
   zoom: 4,
   mapTypeId: 'roadmap'
 });
 
-// Cities with extra charge
-// var citymap = {
-//   chicago: {
-//     center: {lat: 41.878, lng: -87.629},
-//     distance: 2714856
-//   },
-//   newyork: {
-//     center: {lat: 40.714, lng: -74.005},
-//     distance: 8405837
-//   },
-//   losangeles: {
-//     center: {lat: 34.052, lng: -118.243},
-//     distance: 3857799
-//   },
-//   vancouver: {
-//     center: {lat: 49.25, lng: -123.1},
-//     distance: 603502
-//   }
-// };
-//
-// for (var city in citymap) {
-//   // Add the circle for this city to the map.
-//   var cityCircle = new google.maps.Circle({
-//     strokeColor: '#FF0000',
-//     strokeOpacity: 0.8,
-//     strokeWeight: 2,
-//     fillColor: '#FF0000',
-//     fillOpacity: 0.35,
-//     map: map,
-//     center: citymap[city].center,
-//     radius: Math.sqrt(citymap[city].distance) * 100
-//   });
-// }
-
 
 // drawing path
 directionsDisplay.setMap(map);
 
-var onChangeHandler = function() {
+window.onChangeHandler = function() {
   calculateAndDisplayRoute(directionsService, directionsDisplay);
 };
 
@@ -71,11 +43,6 @@ map.addListener('bounds_changed', function() {
 
 
 
-
-//
-//
-//
-//
 var markers = [];
 // Listen for the event fired when the user selects a prediction and retrieve
 // more details for that place.
@@ -117,23 +84,43 @@ searchBox.addListener('places_changed', function() {
       position: place.geometry.location
     })
 
-     markers.push(marker);
-     positions[0] = marker.getPosition().lat();
-     positions[1] = marker.getPosition().lng();
+   markers.push(marker);
+   positions[0] = marker.getPosition().lat();
+   positions[1] = marker.getPosition().lng();
 
-     if (positions[2] && positions[3]) {
-       onChangeHandler();
-     }
+   let geocoder = new google.maps.Geocoder();
+
+   let latlng = new google.maps.LatLng(positions[0], positions[1]);
+   geocoder.geocode({'latLng': latlng}, function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK) {
+       if (results[1]) {
+         for (var i=0; i<results[0].address_components.length; i++) {
+           for (var b=0;b<results[0].address_components[i].types.length;b++) {
+             if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                 city = results[0].address_components[i].long_name;
+                 html_city = `* This Pick_Up Point Lies in : ${city}`
+                 $('#city').text(html_city);
+                 break;
+             }
+           }
+         }
+       };
+     };
+   });
 
 
-    // poup window for coordinates
-     var infowindow = new google.maps.InfoWindow({
-        content: '<p>Marker Location:' + marker.getPosition() + '</p>'
-      });
+   if (positions[2] && positions[3]) {
+     onChangeHandler();
+   }
+
+  // poup window for coordinates
+   var infowindow = new google.maps.InfoWindow({
+      content: '<p>Marker Location:' + marker.getPosition() + '</p>'
+    });
 
     google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map, marker);
-      });
+      infowindow.open(map, marker);
+    });
 
     google.maps.event.addListener(marker, 'drag', function() {
       infowindow.close();
@@ -160,16 +147,8 @@ searchBox.addListener('places_changed', function() {
 
 
 
-
-
-//
-//
-//
-//
-//
 // search box2
-//
-//
+
 var markers2 = [];
 searchBox2.addListener('places_changed', function() {
  var places2 = searchBox2.getPlaces();
@@ -209,8 +188,8 @@ searchBox2.addListener('places_changed', function() {
    })
 
     markers2.push(marker2);
-    positions[2] = marker2.getPosition().lat();
-    positions[3] = marker2.getPosition().lng();
+    positionsFinal[0] = marker2.getPosition().lat();
+    positionsFinal[1] = marker2.getPosition().lng();
     onChangeHandler();
 
     // poup window for coordinates
@@ -230,8 +209,8 @@ searchBox2.addListener('places_changed', function() {
     });
 
     google.maps.event.addListener(marker2, 'dragend', function() {
-      positions[2] = marker2.getPosition().lat();
-      positions[3] = marker2.getPosition().lng();
+      positionsFinal[0] = marker2.getPosition().lat();
+      positionsFinal[1] = marker2.getPosition().lng();
       onChangeHandler();
     });
 
@@ -248,19 +227,30 @@ searchBox2.addListener('places_changed', function() {
 }
 
 
-
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-  console.log(positions[0],positions[1]);
+
+  let origin = {lat: positions[0], lng: positions[1]}
+
   directionsService.route({
-    origin: {lat: positions[0], lng: positions[1]},
-    destination: {lat: positions[2], lng: positions[3]},
+    origin: origin,
+    destination: {lat: positionsFinal[0], lng: positionsFinal[1]},
+    waypoints: wayPoints,
     travelMode: 'DRIVING'
   }, function(response, status) {
     if (status === 'OK') {
       directionsDisplay.setDirections(response);
       var route = response.routes[0];
-      console.log(route.legs[0].distance.text);
-      document.getElementById('distance').value = route.legs[0].distance.text;
+
+      const METERS_TO_MILES = 0.000621371192;
+      let distance = 0;
+      for (var i = 0; i < route.legs.length; i++) {
+        distance += Math.round(parseInt(route.legs[i].distance.value) * METERS_TO_MILES);
+      }
+
+      console.log(route.legs[0].duration.text);
+
+      document.getElementById('distance').value = distance + ' mile';
+
     } else if (status === 'ZERO_RESULTS') {
       window.location.href = '/form/newRide/1'
     } else {

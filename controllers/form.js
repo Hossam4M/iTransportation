@@ -41,7 +41,12 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
     numberOfPersons:request.body.numberOfPersons,
     numberOfLuggage:request.body.numberOfLuggage,
     handicap:request.body.handicap||'false',
+    childSeat:{
+      type:request.body.childSeatType,
+      number:request.body.childSeatNumber
+    }
   }
+
   request.session.rideInfo = rideInfo;
   response.redirect('/form/newRide/2');
 });
