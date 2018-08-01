@@ -104,8 +104,9 @@
 
     <div class="form-row text-center mb-3 text-info">
       <div class="col-md-12">
-          <span class="display-3">$<%= cost %></span>
+          <span class="display-3">$<span id="rideCost"><%= cost %></span></span>
       </div>
+      <input id="finalCost" name="finalCost" type="text" name="" value="<%= cost %>" hidden>
     </div>
 
     <div class="form-row text-center mb-2">

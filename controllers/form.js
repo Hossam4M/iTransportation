@@ -57,8 +57,12 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
 router.get('/newRide/2',function(request,response){
   let rideInfoData = request.session.rideInfo;
   let cars = carModel.find({},(err,cars)=>{
+    let stopNumber = 0
+    if (rideInfoData.stops) {
+      stopNumber = rideInfoData.stops.length;
+    }
     response.render('form/secondStep',{
-      cars,rideInfoData,
+      cars,rideInfoData,stopNumber
     });
   });
 });
@@ -72,7 +76,12 @@ router.post('/newRide/2',urlEncodedMid,function(request,response){
 
     let vehicleFee = parseFloat(request.session.carInfo.charge.vehicleFee);
 
-    let totalCost = perMile + vehicleFee;
+    let stopNumber = 0
+    if (request.session.rideInfo.stops) {
+      let stopNumber = request.session.rideInfo.stops.length;
+    }
+
+    let totalCost = perMile + vehicleFee + (stopNumber*10);
     request.session.cost = totalCost;
 
     response.redirect('/form/newRide/3');
@@ -110,7 +119,6 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
   let confirmation = Math.floor((Math.random() * 99999) + 10000);
 
   request.session.confirmation = confirmation;
-  console.log(request.session.carInfo);
 
   // cost details
   let perMile = parseFloat(request.session.carInfo.charge.perMile.main) * parseFloat(request.session.rideInfo.distance);
@@ -120,9 +128,11 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
   let cost = {
     perMile,
     vehicleFee,
-    discount:0,
+    discount:request.body.discount ? request.body.discount : 0,
     others:0
   }
+
+  request.session.cost = request.body.finalCost
 
   let ride = new rideModel({
       rideInfo : request.session.rideInfo,

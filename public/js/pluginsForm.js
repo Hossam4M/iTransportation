@@ -16,6 +16,34 @@ $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
 
+// promoCode validation
+$('#promoCode').on('input',function () {
+  let code = $('#promoCode').val();
+  if (code.length == 5) {
+    $.ajax({
+      type : 'GET',
+      url : `/promos/check/${code}`,
+      success : function (data) {
+        if (data.isFound) {
+          $('#promoStatus').html(`
+            valid (${data.value}$)
+            <input id="discount" name="discount" type="text" name="" value="${data.value}" hidden>
+            `).addClass('text-success');
+          let cost = parseInt($('#rideCost').text()) - parseInt(data.value);
+          $('#rideCost').text(cost);
+          $('#promoCode').prop('readonly',true);
+          $('#finalCost').val(cost);
+        } else {
+          $('#promoStatus').text('invalid').removeClass('text-success');
+        }
+      }
+    });
+  } else {
+    $('#promoStatus').text('invalid').removeClass('text-success');
+  }
+
+});
+
 // edit buttons
 $('#edit1').click((e)=>{
   e.preventDefault();
@@ -140,67 +168,3 @@ $('#addStop').click((e)=>{
 
 stopNo++;
 });
-
-
-// let markers`+ parseInt(stopNo+2) +` = [];
-//
-// searchBox${stopNo}.addListener('places_changed', function() {
-//   var places = searchBox${stopNo}.getPlaces();
-//
-//   if (places.length == 0) {
-//     return;
-//   }
-//
-//   markers`+ parseInt(stopNo+2) +`.forEach(function(marker){
-//     marker.setMap(null);
-//   });
-//
-//   let bounds = new google.maps.LatLngBounds();
-//   places.forEach(function(place) {
-//     if (!place.geometry) {
-//       console.log("Returned place contains no geometry");
-//     };
-//     var icon = {
-//       url: place.icon,size: new google.maps.Size(71, 71),
-//       origin: new google.maps.Point(0, 0),
-//       anchor: new google.maps.Point(17, 34),
-//       scaledSize: new google.maps.Size(25, 25)
-//     };
-//     var marker = new google.maps.Marker({
-//       map: map,
-//       draggable: true,
-//       animation: google.maps.Animation.DROP,
-//       title: place.name,
-//       position: place.geometry.location
-//     });
-//     markers`+parseInt(stopNo+2)+`.push(marker);
-//     positions[`+parseInt(stopNo+1)+`] = marker.getPosition().lat();
-//     positions[`+parseInt(stopNo+2)+`] = marker.getPosition().lng();
-//     onChangeHandler();
-//     var infowindow = new google.maps.InfoWindow({
-//       content: "<p>Marker Location:" + marker.getPosition() + "</p>"
-//     });
-//
-//     google.maps.event.addListener(marker, "click", function() {
-//       infowindow.open(map, marker);
-//     });
-//     google.maps.event.addListener(marker, "drag", function(){
-//       infowindow.close();
-//       infowindow = new google.maps.InfoWindow({
-//         content: "<p>Marker Location:" + marker.getPosition() + "</p>"
-//       });
-//     });
-//     google.maps.event.addListener(marker, "dragend", function() {
-//       positions[`+ parseInt(stopNo+1) +`] = marker.getPosition().lat();
-//       positions[`+ parseInt(stopNo+2) +`] = marker.getPosition().lng();
-//       onChangeHandler();
-//     });
-//
-//     if (place.geometry.viewport) {
-//       bounds.union(place.geometry.viewport);
-//     } else {
-//       bounds.extend(place.geometry.location);
-//     }
-//   });
-//   map.fitBounds(bounds);
-// });

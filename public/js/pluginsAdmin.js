@@ -85,3 +85,42 @@ $('.editDriver').click((e)=>{
   let id = $(e.target).parent().attr('id');
   window.location.href = '/drivers/edit/' + id;
 });
+
+// Click add promo
+$('#addPromo').click(function(e){
+
+  e.preventDefault();
+
+  let names = $('.promoRecord').text();
+  let valueInput = $('#value').val();
+  let codeInput = $('#code').val();
+
+  let isDublicate = names.includes(codeInput.toUpperCase())
+
+  if (valueInput && codeInput && !isDublicate){
+    $.ajax({
+      type : 'GET',
+      url : `/promos/add/${codeInput}/${valueInput}`,
+      success : function (data) {
+        let promoRecord = `
+        <tr>
+          <th class="promoRecord" scope="row">${data.code}</th>
+          <td>${data.value}</td>
+          <td class="text-success">${data.status}</td>
+        </tr>
+        `;
+        $('#promoTable').append(promoRecord);
+        $('#errMsg').remove();
+      }
+    });
+
+  } else {
+    let duplicateMsg = `
+      <div id="errMsg" class="text-danger">
+        <small>This promo code already exists OR You forget to fill all inputs !</small>
+      </div>
+    `;
+    $(duplicateMsg).insertAfter('#promoForm');
+  }
+
+});

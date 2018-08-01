@@ -9,6 +9,7 @@ mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportat
 require("./models/cars");
 require("./models/drivers");
 require("./models/rides");
+require("./models/promos");
 
 // deployment requirements
 const compression = require('compression');
@@ -49,6 +50,8 @@ server.use('/admin/dashboard',authMid);
 server.use('/admin/list',authMid);
 server.use('/admin/ride',authMid);
 server.use('/drivers',authMid);
+server.use('/promos/add',authMid);
+server.use('/promos/list',authMid);
 server.use('/cars',authMid);
 
 // Send SMS
@@ -77,6 +80,10 @@ server.use('/drivers',driversRouter);
 
 const carsRouter = require('./controllers/cars.js');
 server.use('/cars',carsRouter);
+
+const promosRouter = require('./controllers/promos.js');
+server.use('/promos',promosRouter);
+
 
 const formRouter = require('./controllers/form.js');
 server.use('/form',formRouter);

@@ -1,0 +1,48 @@
+<% include ../layout/header.ejs %>
+
+<div class="container-fluid">
+
+  <div class="col-md-6 offset-md-3">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Promo Code</th>
+          <th scope="col">Value ($)</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody id="promoTable">
+
+        <% promos.forEach((promo)=>{ %>
+          <tr>
+            <th class="promoRecord" scope="row"><%= promo.code %></th>
+            <td><%= promo.value %></td>
+            <td class="<% if(promo.status == 'Available'){ %>text-success<% }else{ %> text-danger<% } %>"><%= promo.status %></td>
+          </tr>
+        <% }); %>
+
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-md-12 text-center mt-5">
+    <div id="promoForm" class="form-row">
+      <div class="offset-md-3 col-md-3 mb-3">
+        <input id="code" name="code" type="text" class="form-control" value="" placeholder="PromoCode" required>
+      </div>
+      <div class="col-md-2 mb-3">
+        <input id="value" name="value" type="number" class="form-control" value="" placeholder="Value ($)" required>
+      </div>
+
+      <div class="col-md-1 mb-3">
+        <button id="addPromo" class="btn btn-dark form-control" type="button" name="button">Add Promo</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<% include ../layout/footer.ejs %>
