@@ -1,5 +1,3 @@
-var positions = [];
-var positionsFinal = [];
 
 var map;
 var city;
@@ -87,6 +85,9 @@ searchBox.addListener('places_changed', function() {
    markers.push(marker);
    positions[0] = marker.getPosition().lat();
    positions[1] = marker.getPosition().lng();
+
+   localStorage.setItem("position1", positions[0].toString());
+   localStorage.setItem("position2", positions[1].toString());
 
    let geocoder = new google.maps.Geocoder();
 
@@ -190,6 +191,10 @@ searchBox2.addListener('places_changed', function() {
     markers2.push(marker2);
     positionsFinal[0] = marker2.getPosition().lat();
     positionsFinal[1] = marker2.getPosition().lng();
+
+    localStorage.setItem("position3", positionsFinal[0].toString());
+    localStorage.setItem("position4", positionsFinal[1].toString());
+
     onChangeHandler();
 
     // poup window for coordinates

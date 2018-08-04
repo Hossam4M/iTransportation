@@ -115,6 +115,8 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
     }
   }
 
+  request.session.clientInfo = clientInfo
+
   // random number from 10000 to 19999
   let confirmation = Math.floor((Math.random() * 99999) + 10000);
 
@@ -195,6 +197,168 @@ function sendMail(mailData) {
     }
   });
 }
+
+
+// return service
+
+// first step
+router.get('/returnRide/1',function(request,response){
+  response.render('return/firstStep',{
+    rideInfo : request.session.rideInfo
+  });
+});
+
+router.post('/returnRide/1',urlEncodedMid,function(request,response){
+  let rideInfo = {
+    serviceType:request.body.serviceType,
+    pDate:request.body.pDate,
+    pTime:request.body.pTime,
+    pLocation:request.body.pLocation,
+    dLocation:request.body.dLocation,
+    distance:parseFloat(request.body.distance),
+    stops:request.body.stops,
+    numberOfPersons:request.body.numberOfPersons,
+    numberOfLuggage:request.body.numberOfLuggage,
+    handicap:request.body.handicap||'false',
+    childSeat:{
+      type:request.body.childSeatType,
+      number:request.body.childSeatNumber
+    }
+  }
+
+  request.session.rideInfo = rideInfo;
+  response.redirect('/form/returnRide/2');
+});
+
+
+
+// second step
+router.get('/returnRide/2',function(request,response){
+  let rideInfoData = request.session.rideInfo;
+  let cars = carModel.find({},(err,cars)=>{
+    let stopNumber = 0
+    if (rideInfoData.stops) {
+      stopNumber = rideInfoData.stops.length;
+    }
+    response.render('form/secondStep',{
+      cars,rideInfoData,stopNumber
+    });
+  });
+});
+
+router.post('/returnRide/2',urlEncodedMid,function(request,response){
+
+  let carsDB = carModel.find({'model':request.body.model},(err,cars)=>{
+    request.session.carInfo = cars[0];
+
+    let perMile = parseFloat(request.session.carInfo.charge.perMile.main) * parseFloat(request.session.rideInfo.distance);
+
+    let vehicleFee = parseFloat(request.session.carInfo.charge.vehicleFee);
+
+    let stopNumber = 0
+    if (request.session.rideInfo.stops) {
+      let stopNumber = request.session.rideInfo.stops.length;
+    }
+
+    let totalCost = perMile + vehicleFee + (stopNumber*10);
+    request.session.cost = totalCost;
+
+    response.redirect('/form/returnRide/3');
+  });
+});
+
+
+// third sterp
+router.get('/returnRide/3',urlEncodedMid,function(request,response){
+
+  let carInfoData = request.session.carInfo;
+  let rideInfoData = request.session.rideInfo;
+  let cost = request.session.cost;
+
+  response.render('return/ThirdStep',{
+    carInfoData,rideInfoData,cost,
+    clientInfo : request.session.clientInfo
+  });
+});
+
+router.post('/returnRide/3',urlEncodedMid,function(request,response){
+  let clientInfo = {
+    firstname:request.body.firstname,
+    lastname:request.body.lastname,
+    email:request.body.email,
+    mobileNumber:request.body.mobileNumber,
+    creditCard:{
+      number:request.body.number,
+      holder:request.body.holder,
+      eDate:request.body.eDate,
+      cvc:request.body.cvc
+    }
+  }
+
+  request.session.clientInfo = clientInfo
+
+  // random number from 10000 to 19999
+  let confirmation = Math.floor((Math.random() * 99999) + 10000);
+
+  request.session.confirmation = confirmation;
+
+  // cost details
+  let perMile = parseFloat(request.session.carInfo.charge.perMile.main) * parseFloat(request.session.rideInfo.distance);
+
+  let vehicleFee = parseFloat(request.session.carInfo.charge.vehicleFee);
+
+  let cost = {
+    perMile,
+    vehicleFee,
+    discount:request.body.discount ? request.body.discount : 0,
+    others:0
+  }
+
+  request.session.cost = request.body.finalCost
+
+  let ride = new rideModel({
+      rideInfo : request.session.rideInfo,
+      car : request.session.carInfo._id,
+      customerInfo : clientInfo,
+      comment : request.body.comment,
+      status : 'pending',
+      totalCost : request.session.cost,
+      cost,
+      confirmation
+  });
+
+  let passenger = clientInfo.lastname + ',' + clientInfo.firstname;
+
+  ride.save(function(err,doc){
+      if(!err){
+        // calling sendMail function
+        sendMail({
+          email:clientInfo.email,
+          serviceType:ride.rideInfo.serviceType,
+          totalCost:request.session.cost,
+          name:passenger,
+          date:ride.rideInfo.pDate,
+          time:ride.rideInfo.pDate,
+          pLocation:ride.rideInfo.pLocation,
+          dLocation:ride.rideInfo.dLocation,
+          confirmation,
+          cost
+        });
+
+        response.redirect('/form/returnRide/4');
+
+      }else{
+          response.json(err);
+      }
+  });
+});
+
+router.get('/returnRide/4',function (request,response) {
+  let confirmation = request.session.confirmation;
+  response.render('return/confirm',{
+    confirmation
+  });
+});
 
 
 module.exports = router;
