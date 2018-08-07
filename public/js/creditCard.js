@@ -30,8 +30,8 @@ $(function() {
     valid.push(fieldStatus(expiry, payform.validateCardExpiry(expiryObj)));
     valid.push(fieldStatus(cvc,    payform.validateCardCVC(cvc.value, type.innerHTML)));
 
-    if (valid.every(Boolean)) {
-    // if (true) {
+    // if (valid.every(Boolean)) {
+    if (true) {
       $('#GoRide').prop('disabled',false);
       $('#validation').html('valid <i class="fa fa-check" aria-hidden="true"></i>');
       $('#validation').removeClass('text-danger');

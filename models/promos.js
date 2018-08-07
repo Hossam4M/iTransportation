@@ -9,7 +9,10 @@ var promos = new Schema({
     },
     code:String,
     value:String,
-    status:String,
+    numberUsed:{
+        type:Number,
+        default:0
+    },
 });
 
 mongoose.model('promos',promos)

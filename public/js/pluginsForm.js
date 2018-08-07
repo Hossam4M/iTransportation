@@ -5,7 +5,15 @@ $( function() {
 
 // timepicker
 $(document).ready(function(){
-  $(".time_element").timepicki();
+  $(".time_element").wickedpicker({
+    now: new Date().now,
+    twentyFour: false,
+    upArrow: 'wickedpicker__controls__control-up',
+    downArrow: 'wickedpicker__controls__control-down',
+    close: 'wickedpicker__close',
+    hoverState: 'hover-state',
+    title: 'Timepicker'
+  });
 });
 
 // popover

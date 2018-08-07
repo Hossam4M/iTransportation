@@ -8,7 +8,7 @@
         <tr>
           <th scope="col">Promo Code</th>
           <th scope="col">Value ($)</th>
-          <th scope="col">Status</th>
+          <th scope="col">Used no.</th>
         </tr>
       </thead>
       <tbody id="promoTable">
@@ -17,7 +17,7 @@
           <tr>
             <th class="promoRecord" scope="row"><%= promo.code %></th>
             <td><%= promo.value %></td>
-            <td class="<% if(promo.status == 'Available'){ %>text-success<% }else{ %> text-danger<% } %>"><%= promo.status %></td>
+            <td class="<% if(promo.numberUsed == 0){ %>text-success<% }else{ %> text-danger<% } %>"><%= promo.numberUsed %></td>
           </tr>
         <% }); %>
 

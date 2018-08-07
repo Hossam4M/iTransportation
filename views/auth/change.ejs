@@ -1,0 +1,30 @@
+<% include ../layout/header.ejs %>
+
+<form class="form-signin" method="post">
+
+  <div class="text-center mb-4">
+    <img class="" src="/images/logo.png" alt="" width="100%">
+    <h1 class="h3 font-weight-normal display-1"><i class="fa fa-user-circle" aria-hidden="true"></i></h1>
+    <h1 class="h4 mb-3 font-weight-normal">admin</h1>
+  </div>
+
+  <div class="form-label-group">
+    <input type="text" id="username" name="username" class="form-control" placeholder="UserName" required autofocus>
+    <label for="username">UserName</label>
+  </div>
+
+  <div class="form-label-group">
+    <input type="password" name="password" id="password" class="form-control" placeholder="New Password" required>
+    <label for="password">Password</label>
+  </div>
+
+  <div class="form-label-group">
+    <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="Confirm Password" required>
+    <label for="passwordConfirm">Confirm Password</label>
+    <small id="confirmComment"></small>
+  </div>
+
+  <button id="updateCredential" class="btn btn-lg btn-primary btn-block" type="submit" disabled>Update Credentials</button>
+</form>
+
+<% include ../layout/footer.ejs %>

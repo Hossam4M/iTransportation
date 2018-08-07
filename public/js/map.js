@@ -249,12 +249,12 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       const METERS_TO_MILES = 0.000621371192;
       let distance = 0;
       for (var i = 0; i < route.legs.length; i++) {
-        distance += Math.round(parseInt(route.legs[i].distance.value) * METERS_TO_MILES);
+        distance += parseFloat(route.legs[i].distance.value) * METERS_TO_MILES;
       }
 
       console.log(route.legs[0].duration.text);
 
-      document.getElementById('distance').value = distance + ' mile';
+      document.getElementById('distance').value = distance.toFixed(2) + ' mile';
 
     } else if (status === 'ZERO_RESULTS') {
       window.location.href = '/form/newRide/1'

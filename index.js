@@ -4,11 +4,12 @@ const server = express();
 
 // Startup database connection
 const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost:27017/itransportation');
-mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportation');
+mongoose.connect('mongodb://localhost:27017/itransportation');
+// mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportation');
 require("./models/cars");
 require("./models/drivers");
 require("./models/rides");
+require("./models/admins");
 require("./models/promos");
 
 // deployment requirements
@@ -34,6 +35,7 @@ server.use(session({
 // middleware for passing session variables
 server.use(function(req, res, next){
   res.locals.loggedIn = req.session.loggedIn;
+  res.locals.rideInfo = req.session.rideInfo;
   next();
 });
 
@@ -47,8 +49,11 @@ function authMid(request,response,next) {
 }
 
 server.use('/admin/dashboard',authMid);
+server.use('/admin/credential',authMid);
 server.use('/admin/list',authMid);
 server.use('/admin/ride',authMid);
+server.use('/admin/endUser',authMid);
+server.use('/admin/logout',authMid);
 server.use('/drivers',authMid);
 server.use('/promos/add',authMid);
 server.use('/promos/list',authMid);

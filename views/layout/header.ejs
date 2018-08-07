@@ -26,8 +26,8 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <!-- timepicker config -->
-        <link rel="stylesheet" type="text/css" href="/css/timepicki.css">
-        <script src="/js/timepicki.js"></script>
+        <link rel="stylesheet" href="/css/wickedpicker.css">
+        <script src="/js/wickedpicker.js"></script>
 
         <script type="text/javascript">
           var positions = [];
@@ -37,28 +37,38 @@
     </head>
     <body id="body">
 
+      <% if (locals.loggedIn) {%>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <a class="navbar-brand" href="#">iTransportation</a>
-
-          <% if (locals.loggedIn) {%>
-            <div class="collapse navbar-collapse">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                  <li class="nav-item">
-                      <a class="nav-link" href="/admin/dashboard">Dashboard</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/cars/list">Cars</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/drivers/list">Drivers</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/promos/list">Promos</a>
-                  </li>
-              </ul>
-            </div>
-          <% } %>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/credential">Credentials</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cars/list">Cars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/drivers/list">Drivers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/promos/list">Promos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/endUser">Visit Website</a>
+                </li>
+            </ul>
+            <a href="/admin/logout">
+              <span class="navbar-text">
+                LogOut <i class="fa fa-sign-out" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
         </nav>
+      <% } %>

@@ -9,7 +9,7 @@ let ObjectId = require('mongoose').Types.ObjectId;
 const rideModel = mongoose.model('rides');
 const carModel = mongoose.model('cars');
 const driverModel = mongoose.model('drivers');
-
+const adminModel = mongoose.model('admins');
 
 // Authentication
 router.get('/auth',function(request,response){
@@ -20,13 +20,18 @@ router.get('/auth',function(request,response){
 });
 
 router.post('/auth',urlEncodedMid,function(request,response){
-  if (request.body.username == "hossam" && request.body.password == "123456") {
-    request.session.loggedIn = true;
-    response.redirect('/admin/dashboard');
-  } else {
-    request.flash("message"," not authorized !  invalid username or password");
-    response.redirect('/admin/auth');
-  }
+
+  let adminDB = adminModel.findOne({},function(err,doc){
+
+    if (request.body.username == doc['username'] && request.body.password == doc['password']) {
+      request.session.loggedIn = true;
+      response.redirect('/admin/dashboard');
+    } else {
+      request.flash("message"," not authorized !  invalid username or password");
+      response.redirect('/admin/auth');
+    }
+
+  });
 
 });
 
@@ -143,7 +148,31 @@ router.post('/ride/driver',urlEncodedMid,(request,response)=>{
   });
 })
 
+// visis website
+router.get('/endUser',(request,response)=>{
+  response.redirect('/form/newRide/1');
+});
 
+// logOut
+router.get('/logout',(request,response)=>{
+  request.session.loggedIn = false;
+  response.redirect('/admin/auth');
+});
+
+// Credentials
+router.get('/credential',(request,response)=>{
+  response.render('auth/change');
+});
+
+router.post('/credential',urlEncodedMid,(request,response)=>{
+  let adminDB = adminModel.findOne({},function(err,doc){
+    doc['username'] = request.body.username;
+    doc['password'] = request.body.password;
+    doc.save();
+    request.session.loggedIn = false;
+    response.redirect('/admin/auth');
+  });
+});
 
 
 module.exports = router;

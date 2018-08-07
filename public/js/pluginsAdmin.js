@@ -31,30 +31,6 @@ $('.carCost,#distance').on('input',()=>{
 
 });
 
-// showing driver
-// $('.driver').click((e)=>{
-//   e.preventDefault();
-//   let id = $(e.target).attr('id');
-//   if (id === 'default') {
-//     $.ajax({
-//       type : 'POST',
-//       url : '/admin/ride/driver',
-//       data : {
-//         id : $('#carId').val()
-//       },
-//       success : function (data) {
-//         $('.driver').prop('hidden',true);
-//         $('#driver').prop('hidden',false);
-//         $('#driver').val(data.name);
-//       }
-//     });
-//   } else {
-//     $('.driver').prop('hidden',true);
-//     $('#driver').prop('hidden',false);
-//     $('#driver').val("");
-//   }
-// });
-
 // upload image preview
 function readURL(input) {
   if (input.files && input.files[0]) {
@@ -106,7 +82,7 @@ $('#addPromo').click(function(e){
         <tr>
           <th class="promoRecord" scope="row">${data.code}</th>
           <td>${data.value}</td>
-          <td class="text-success">${data.status}</td>
+          <td class="text-success">${data.numberUsed}</td>
         </tr>
         `;
         $('#promoTable').append(promoRecord);
@@ -123,4 +99,22 @@ $('#addPromo').click(function(e){
     $(duplicateMsg).insertAfter('#promoForm');
   }
 
+});
+
+// confirm password
+$('#passwordConfirm').on('input',(e)=>{
+  let password = $('#password').val();
+  let confirm = $('#passwordConfirm').val();
+
+  if (password == confirm) {
+    $('#updateCredential').prop('disabled',false);
+    $('#confirmComment').removeClass('text-danger');
+    $('#confirmComment').addClass('text-success');
+    $('#confirmComment').text('* the two passwords match correctly')
+  } else {
+    $('#updateCredential').prop('disabled',true);
+    $('#confirmComment').addClass('text-danger');
+    $('#confirmComment').removeClass('text-success');
+    $('#confirmComment').text('* there is no match between passwords')
+  }
 });
