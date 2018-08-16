@@ -1,0 +1,51 @@
+<% include ../layout/header.ejs %>
+
+<% include ../layout/dashboard_icons.ejs %>
+
+<div class="container">
+
+  <form class="" action="" method="post">
+
+    <div class="text-center">
+
+      <div class="form-row">
+
+        <div class="col-md-4 offset-md-4 mb-3">
+          <label>Stop Points</label>
+          <input name="stop" type="number" class="form-control" value="<%= addons.stop %>" required>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="col-md-4 offset-md-4 mb-3">
+          <label>Child Seat</label>
+          <input name="child" type="number" class="form-control" value="<%= addons.child %>" required>
+        </div>
+
+      </div>
+
+
+      <div class="form-row">
+
+        <div class="col-md-4 offset-md-4 mb-3">
+          <label>Early Morning</label>
+          <input name="earlyMorning" type="number" class="form-control" value="<%= addons.earlyMorning %>" required>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="form-row">
+      <button type="submit" name="button" class="btn btn-dark btn-lg col-md-4 offset-md-4">Update Extra Charge</button>
+    </div>
+
+  </form>
+
+</div>
+
+
+
+<% include ../layout/footer.ejs %>

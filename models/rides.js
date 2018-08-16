@@ -33,7 +33,8 @@ var rides = new Schema({
         number:String,
         holder:String,
         eDate:String,
-        cvc:String
+        cvc:String,
+        status:String
       }
     },
     comment:String,
@@ -45,10 +46,34 @@ var rides = new Schema({
         type:Number,
         default:0
       },
-      others:{
+      earlyMorning:{
         type:Number,
         default:0
-      }
+      },
+      stops:{
+        type:Number,
+        default:0
+      },
+      childSeats:{
+        type:Number,
+        default:0
+      },
+    },
+    flightDetails:{
+      pickUp:{
+        type:{
+          airline:String,
+          number:String
+        },
+        default:null
+      },
+      dropOff:{
+        type:{
+          airline:String,
+          number:String
+        },
+        default:null
+      },
     },
     totalCost:Number,
     confirmation:Number,

@@ -1,5 +1,7 @@
 <% include ../layout/header.ejs %>
 
+<% include ../layout/dashboard_icons.ejs %>
+
 <div class="container">
 
   <div class="col-md-12 text-center mb-4">
@@ -7,46 +9,65 @@
   </div>
 
   <form action="" method="post" enctype="multipart/form-data">
-    <div class="form-row">
+    <div class="form-row text-center">
 
       <%# Car Model %>
-      <div class="col-md-6 offset-md-3 mb-3 text-center">
+      <div class="col-md-6 offset-md-2 mb-3 text-center">
         <label>Car Model</label>
         <input name="model" type="text" class="form-control" value="<%= car.model %>" required>
+      </div>
+
+      <div class="col-md-2 mb-3 text-center">
+        <label>Car Order</label>
+        <input name="order" type="text" class="form-control" value="<%= car.order %>" required>
       </div>
     </div>
 
     <div class="form-row">
       <%# number of persons %>
-      <div class="col-md-4 mb-3">
+      <div class="col-md-3 mb-3">
         <label>number of persons</label>
         <div class="input-group">
           <input name="numberOfPersons" type="number" class="form-control " min="0" value="<%= car.numberOfPersons %>" required>
         </div>
       </div>
 
-    <%# number of luggage %>
-      <div class="col-md-4 mb-3">
+      <%# number of luggage %>
+      <div class="col-md-3 mb-3">
         <label>number of Luggage</label>
         <input name="numberOfLuggage" type="number" class="form-control" min="0" value="<%= car.numberOfLuggage %>" required>
       </div>
 
-      <%# charge %>
-      <div class="col-md-4 mb-3">
-        <label>Charge per Mile</label>
-        <input name="perMile" type="number" class="form-control" min="0" value="<%= car.charge.perMile.main %>" required>
+      <%# starting miles %>
+      <div class="col-md-3 mb-3">
+        <label>no. Starting Miles</label>
+        <input name="startingMiles" type="number" class="form-control" min="0" value="<%= car.startingMiles %>" required>
       </div>
+
+      <%# charge of starting miles %>
+      <div class="col-md-3 mb-3">
+        <label>Starting Charge</label>
+        <input name="startingMiles_charge" type="number" class="form-control" min="0" value="<%= car.startingMiles_charge %>" required>
+      </div>
+
+
     </div>
 
     <div class="form-row">
 
       <!-- vehicle fee -->
-      <div class="col-md-4 mb-3">
+      <div class="col-md-3 mb-3">
         <label>Vehicle Fee</label>
         <input name="vehicleFee" type="number" class="form-control" min="0" value="<%= car.charge.vehicleFee %>" required>
       </div>
 
-      <div class="col-md-8">
+      <%# charge %>
+      <div class="col-md-3 mb-3">
+        <label>Charge per Mile</label>
+        <input name="perMile" type="number" class="form-control" min="0" value="<%= car.charge.perMile.main %>" required>
+      </div>
+
+      <div class="col-md-6">
         <label>Car Image</label>
         <div class="input-group mb-3">
             <div class="input-group-prepend">

@@ -13,9 +13,6 @@
               <div class="col-md-12 text-primary">
                 <h5>Step 1 : Ride Info <span id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <!-- <div class="col-md-6">
-                <h5 id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div> -->
             </div>
 
           </div>
@@ -61,9 +58,7 @@
               <div class="col-md-12 text-primary">
                 <h5>Step 2 : Select your Car <span id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <!-- <div class="col-md-6">
-                <h5 id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div> -->
+
             </div>
 
           </div>
@@ -96,98 +91,254 @@
       </div>
     </span>
 
-    <div class="form-row text-center">
-      <div class="col-md-12">
-          <h6>The total Cost of Trip</h6>
-      </div>
-    </div>
+    <div class="row mb-5">
 
-    <div class="form-row text-center mb-3 text-info">
-      <div class="col-md-12">
-          <span class="display-3">$<span id="rideCost"><%= cost %></span></span>
-      </div>
-      <input id="finalCost" name="finalCost" type="text" name="" value="<%= cost %>" hidden>
-    </div>
+      <!-- continue as Guest -->
+      <div class="col-md-6 mb-5">
 
-    <div class="form-row text-center mb-2">
-      <div class="col-md-12">
-          <h3>Please fill the final details</h3>
-      </div>
-    </div>
+        <div class="form-row">
 
-    <div class="form-row">
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+              <div class="col-md-6">
+                <h5>Passenger Information</h5>
+              </div>
+            </span>
+          </div>
 
-        <%# firstname %>
-      <div class="col-md-6 mb-3">
-        <label>First name</label>
-        <input name="firstname" type="text" class="form-control" value="<%= clientInfo.firstname %>" required/>
-      </div>
 
-      <%# lastname %>
-      <div class="col-md-6 mb-3">
-        <label>Last name</label>
-        <input name="lastname" type="text" class="form-control" value="<%= clientInfo.lastname %>" required>
-      </div>
+          <%# firstname %>
+          <div class="col-md-6 mb-3">
+            <label>First name</label>
+            <input name="firstname" type="text" class="form-control" value="<%= clientInfoData.firstname %>" required/>
+          </div>
 
-    </div>
-
-    <%# email %>
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label>Email <i class="fa fa-envelope" aria-hidden="true"></i></label>
-        <input name="email" type="email" class="form-control" value="<%= clientInfo.email %>" required>
-        <div class="invalid-feedback">
-          Please provide a valid mail
+          <%# lastname %>
+          <div class="col-md-6 mb-3">
+            <label>Last name</label>
+            <input name="lastname" type="text" class="form-control" value="<%= clientInfoData.lastname %>" required>
+          </div>
         </div>
-      </div>
 
-      <%# mobile number %>
-      <div class="col-md-3 mb-3">
-        <label>Phone Number <i class="fa fa-mobile" aria-hidden="true"></i></label>
-        <input id="phone" name="mobileNumber" type="tel" class="form-control" value="<%= clientInfo.mobileNumber %>" required>
-        <div class="invalid-feedback">
-          Please provide a valid number.
+        <%# mobile number %>
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label>Phone Number <i class="fa fa-mobile" aria-hidden="true"></i></label>
+            <input id="phone" name="mobileNumber" type="text" class="form-control" value="<%= clientInfoData.mobileNumber %>" required>
+            <div class="invalid-feedback">
+              Please provide a valid number.
+            </div>
+          </div>
+
+          <%# email %>
+
+          <div class="col-md-12 mb-3">
+            <label>Email <i class="fa fa-envelope" aria-hidden="true"></i></label>
+            <input name="email" type="email" class="form-control" value="<%= clientInfoData.email %>" required>
+            <div class="invalid-feedback">
+              Please provide a valid mail
+            </div>
+          </div>
+
         </div>
+
+        <div class="form-row">
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+              <div class="col-md-6">
+                <h5>Additional Information</h5>
+              </div>
+            </span>
+          </div>
+
+          <h6>Other Comments or Special Requests <i class="fa fa-comments" aria-hidden="true"></i></h6>
+          <textarea class="form-control mb-3" name="comment" rows="5" cols="80" placeholder="Other Comments or Special Requests"></textarea>
+        </div>
+
       </div>
-    </div>
 
-    <% include ../return/creditCard.ejs %>
+      <!-- <div class="col-md-1 mb-5">
+        <hr class="vertical_hr">
+      </div> -->
 
-    <div class="form-row">
-      <h4>Other Comments <i class="fa fa-comments" aria-hidden="true"></i></h4>
-      <textarea class="form-control mb-3" name="comment" rows="8" cols="80" placeholder="write any thing in your mind"></textarea>
-    </div>
+      <!-- login to account -->
+      <div class="col-md-6">
 
-    <div class="col-md-4 offset-md-4 mb-3 text-center">
-      <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a>
+        <div class="form-row">
 
-      <div class="modal fade" id="termsModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content">
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+                <h5 class="ml-3">Flight Information</h5>
+            </span>
+          </div>
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Terms & Conditions</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="flight1_info">
+
+            <div class="col-md-12 flight_details">
+              <label>PickUp Flight Details (Recommended)</label>
             </div>
 
-            <!-- Modal body -->
-            <div class="modal-body">
-              Please contact jgirges@airportitransportation.com for privacy policy.
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <div class="row form-row mb-3 col-md-12 flight_details">
+              <div class="col-md-6 mb-3">
+                <input name="airline_name" type="text" class="form-control" placeholder="Airline Name or Code" required/>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input name="flightNo" type="text" class="form-control" placeholder="Flight #" required/>
+              </div>
             </div>
 
           </div>
-        </div>
+
+
+          <div class="form-check-inline col-md-12 mb-5">
+            <label class="form-check-label">
+              <input id="flight_details" type="checkbox" class="form-check-input">I do not have my flight details yet
+            </label>
+          </div>
+
+          <div class="flight2_info">
+
+            <div class="col-md-12 flight_details2">
+              <label>DropOff Flight Details (Recommended)</label>
+            </div>
+
+            <div class="row form-row mb-3 col-md-12 flight_details2">
+
+              <div class="col-md-6 mb-3">
+                <input name="airline_name2" type="text" class="form-control" placeholder="Airline Name or Code" required/>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <input name="flightNo2" type="text" class="form-control" placeholder="Flight #" required/>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-check-inline col-md-12 mb-3">
+            <label class="form-check-label">
+              <input id="flight_details2" type="checkbox" class="form-check-input">I do not have my flight details yet
+            </label>
+          </div>
+
+
+          <div class="modal fade" tabindex="-1" role="dialog" id="ReturnModal">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Return Service</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="http://localhost:9000/form/returnRide/1" class="embed-responsive-item"></iframe>
+                  </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+              <div class="col-md-6">
+                <h5>Promo Code</h5>
+              </div>
+            </span>
+          </div>
+
+          <div class="row form-row mb-3 col-md-12 mb-3">
+
+            <div class="col-md-8 mb-3">
+              <input id="promoCode" type="text" name="promoCode" class="form-control" placeholder="Enter Promo Code" type="text">
+              <small>check : <b id="promoStatus">-</b></small>
+            </div>
+
+            <div class="col-md-4 text-center">
+              <button id="apply_promo" type="button" class="btn btn-primary mb-3">Apply Promo</button>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-12 mb-3">
+            <span class="d-block p-2 bg-light">
+              <div class="col-md-6">
+                <h5>Pricing Information</h5>
+              </div>
+            </span>
+          </div>
+
+          <div class="col-md-12 mb-4">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <td><%= carInfoData.model %> Base Fare</td>
+                  <th>$ <%= carInfoData.charge.vehicleFee %></th>
+                </tr>
+                <tr>
+                  <td>Per Mile</td>
+                  <th>$ <%= (parseFloat(carInfoData.charge.perMile.main) * parseFloat(rideInfo.distance)).toFixed(2) %></th>
+                </tr>
+                <tr>
+                  <td>Adding Stops Extra Charge</td>
+                  <th>$ <%= costDetails.stopsCost %></th>
+                </tr>
+                <tr>
+                  <td>Early Morning Fees</td>
+                  <th>$ <%= costDetails.earlyMorningCost %></th>
+                </tr>
+                <tr>
+                  <td>Child Seat Fees</td>
+                  <th>$ <%= costDetails.childCost %></th>
+                </tr>
+                <tr>
+                  <td>Discounts</td>
+                  <th>$ <span id="discount_promo">0</span></th>
+                  <input id="discount" type="text" name="discount" value="0" hidden readonly>
+                </tr>
+                <tr class="table-primary text-primary">
+                  <td><h3>Final Total<h3></td>
+                  <th>
+                    <h3 class="font-weight-bold">$ <span id="final_cost"><%= cost %></span></h3>
+                    <input id="finalCost" type="text" name="finalCost" value="" hidden readonly>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <span class="d-block p-2 bg-light">
+              <div class="col-md-6">
+                <h5>Payment Info</h5>
+              </div>
+            </span>
+          </div>
+
+          <% include ../return/creditCard.ejs %>
+
+
       </div>
+
     </div>
 
     <div class="col-md-12 text-center">
-      <button id="GoRide" type="submit" class="btn btn-primary btn-lg mb-3">Go On Ride</button>
+      <h6>
+        By clicking the button below , you agree to our <a href="#">terms & conditions<a>
+      </h6>
+      <button id="book_now" type="submit" class="btn btn-primary btn-lg mb-3">Book Now</button>
     </div>
 
   </form>

@@ -40,6 +40,10 @@ router.post('/add',multerMid.single("image"),(request,response)=>{
               },
               vehicleFee : request.body.vehicleFee
             },
+            order : parseInt(request.body.order),
+            startingMiles : parseInt(request.body.startingMiles),
+            startingMiles_charge : parseInt(request.body.startingMiles_charge),
+
             image: request.file.filename
         });
 
@@ -57,7 +61,7 @@ router.post('/add',multerMid.single("image"),(request,response)=>{
 });
 
 router.get('/list',(request,response)=>{
-  let carDB = carModel.find({},(err,docs)=>{
+  let carDB = carModel.find({}).sort('order').exec(function(err,docs){
     response.render('cars/carList',{
       cars : docs
     });
@@ -84,6 +88,9 @@ router.post('/edit/:id',multerMid.single("image"),(request,response)=>{
       },
       vehicleFee : request.body.vehicleFee
     };
+    doc['order'] = parseInt(request.body.order);
+    doc['startingMiles'] = parseInt(request.body.startingMiles);
+    doc['startingMiles_charge'] = parseInt(request.body.startingMiles_charge);
     if (request.file) {
       doc['image'] = request.file.filename;
     }

@@ -8,6 +8,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const carModel = mongoose.model('cars');
 const rideModel = mongoose.model('rides');
+const addonsModel = mongoose.model('addons');
 
 // nodemailer configuration
 const nodemailer = require("nodemailer");
@@ -23,6 +24,15 @@ const transporter = nodemailer.createTransport({
   },
   tls: {rejectUnauthorized: false}
 });
+
+// retrieve addons charge
+let addons_charges = [];
+let addonsDB = addonsModel.findOne({},(err,doc)=>{
+  addons_charges[0] = doc['stop'];
+  addons_charges[1] = doc['child'];
+  addons_charges[2] = doc['earlyMorning'];
+});
+
 
 // first step
 router.get('/newRide/1',function(request,response){
@@ -47,7 +57,45 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
     }
   }
 
+  let stopsCost = 0 , childCost = 0 , earlyMorningCost = 0
+
+  // stop Cost
+  if (rideInfo.stops) {
+    if (Array.isArray(rideInfo.stops)) {
+      stopsCost = rideInfo.stops.length * addons_charges[0]
+    } else {
+      stopsCost = addons_charges[0]
+    }
+  }
+
+  // child seat cost
+  if (rideInfo.childSeat.number) {
+    if (Array.isArray(rideInfo.childSeat.number)) {
+      function getSum(total, num) {
+      	num = parseInt(num);
+        return parseInt(total) + num;
+      }
+      let childSeatNo = rideInfo.childSeat.number.reduce(getSum);
+      childCost = childSeatNo * addons_charges[1];
+    } else {
+      childCost = parseInt(rideInfo.childSeat.number) * addons_charges[1]
+    }
+  }
+
+  // earlyMorning cost
+  let arr = rideInfo.pTime.split(" ");
+  if (arr[3] == 'AM' && (parseInt(arr[0]) < 4 || parseInt(arr[0]) == 12) ) {
+    earlyMorningCost = addons_charges[2]
+  }
+
+  request.session.costDetails = {
+    stopsCost,childCost,earlyMorningCost
+  }
+
+  console.log(request.session.costDetails);
+
   request.session.rideInfo = rideInfo;
+
   response.redirect('/form/newRide/2');
 });
 
@@ -56,13 +104,11 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
 // second step
 router.get('/newRide/2',function(request,response){
   let rideInfoData = request.session.rideInfo;
-  let cars = carModel.find({},(err,cars)=>{
-    let stopNumber = 0
-    if (rideInfoData.stops) {
-      stopNumber = rideInfoData.stops.length;
-    }
+  let costDetails = request.session.costDetails;
+
+  let cars = carModel.find({}).sort('order').exec(function(err,cars){
     response.render('form/secondStep',{
-      cars,rideInfoData,stopNumber
+      cars,rideInfoData,costDetails
     });
   });
 });
@@ -76,12 +122,9 @@ router.post('/newRide/2',urlEncodedMid,function(request,response){
 
     let vehicleFee = parseFloat(request.session.carInfo.charge.vehicleFee);
 
-    let stopNumber = 0
-    if (request.session.rideInfo.stops) {
-      let stopNumber = request.session.rideInfo.stops.length;
-    }
+    let extraCharge = request.session.costDetails.stopsCost + request.session.costDetails.childCost + request.session.costDetails.earlyMorningCost
 
-    let totalCost = perMile + vehicleFee + (stopNumber*10);
+    let totalCost = (perMile + vehicleFee + extraCharge).toFixed(2);
     request.session.cost = totalCost;
 
     response.redirect('/form/newRide/3');
@@ -101,7 +144,39 @@ router.get('/newRide/3',urlEncodedMid,function(request,response){
   });
 });
 
+
 router.post('/newRide/3',urlEncodedMid,function(request,response){
+  let clientInfo = {
+    firstname:request.body.firstname,
+    lastname:request.body.lastname,
+    email:request.body.email,
+    mobileNumber:request.body.mobileNumber,
+  }
+
+  request.session.clientInfo = clientInfo;
+
+  response.redirect('/form/newRide/3/extend');
+
+});
+
+
+// step 3 extended
+router.get('/newRide/3/extend',function(request,response){
+
+  let carInfoData = request.session.carInfo;
+  let rideInfoData = request.session.rideInfo;
+  let clientInfoData = request.session.clientInfo;
+  let costDetails = request.session.costDetails
+  let cost = request.session.cost;
+
+  response.render('form/ThirdStep_ext',{
+    carInfoData,rideInfoData,clientInfoData,cost,costDetails
+  });
+});
+
+
+router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
+
   let clientInfo = {
     firstname:request.body.firstname,
     lastname:request.body.lastname,
@@ -111,11 +186,12 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
       number:request.body.number,
       holder:request.body.holder,
       eDate:request.body.eDate,
-      cvc:request.body.cvc
+      cvc:request.body.cvc,
+      status:request.body.creditStatus
     }
   }
 
-  request.session.clientInfo = clientInfo
+  request.session.clientInfo = clientInfo;
 
   // random number from 10000 to 19999
   let confirmation = Math.floor((Math.random() * 99999) + 10000);
@@ -130,11 +206,27 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
   let cost = {
     perMile,
     vehicleFee,
-    discount:request.body.discount ? request.body.discount : 0,
-    others:0
+    discount : request.body.discount ? parseInt(request.body.discount) : 0,
+    childSeats : request.session.costDetails.childCost,
+    earlyMorning : request.session.costDetails.earlyMorningCost,
+    stops : request.session.costDetails.stopsCost,
   }
 
-  request.session.cost = request.body.finalCost
+  let flightDetails = {};
+
+  if (request.body.airline_name && request.body.flightNo) {
+    flightDetails.pickUp = {
+      airline : request.body.airline_name,
+      number : request.body.flightNo
+    }
+  }
+
+  if (request.body.airline_name2 && request.body.flightNo2) {
+    flightDetails.dropOff = {
+      airline : request.body.airline_name2,
+      number : request.body.flightNo2
+    }
+  }
 
   let ride = new rideModel({
       rideInfo : request.session.rideInfo,
@@ -143,8 +235,9 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
       comment : request.body.comment,
       status : 'pending',
       totalCost : request.session.cost,
+      flightDetails,
       cost,
-      confirmation
+      confirmation,
   });
 
   let passenger = clientInfo.lastname + ',' + clientInfo.firstname;
@@ -161,6 +254,7 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
           time:ride.rideInfo.pDate,
           pLocation:ride.rideInfo.pLocation,
           dLocation:ride.rideInfo.dLocation,
+          costDetails : request.session.costDetails,
           confirmation,
           cost
         });
@@ -171,6 +265,7 @@ router.post('/newRide/3',urlEncodedMid,function(request,response){
           response.json(err);
       }
   });
+
 });
 
 
@@ -199,7 +294,7 @@ function sendMail(mailData) {
 }
 
 
-// return service
+////////////////////// return service ////////////////////////
 
 // first step
 router.get('/returnRide/1',function(request,response){
@@ -226,6 +321,41 @@ router.post('/returnRide/1',urlEncodedMid,function(request,response){
     }
   }
 
+  let stopsCost = 0 , childCost = 0 , earlyMorningCost = 0
+
+  // stop Cost
+  if (rideInfo.stops) {
+    if (Array.isArray(rideInfo.stops)) {
+      stopsCost = rideInfo.stops.length * addons_charges[0]
+    } else {
+      stopsCost = addons_charges[0]
+    }
+  }
+
+  // child seat cost
+  if (rideInfo.childSeat.number) {
+    if (Array.isArray(rideInfo.childSeat.number)) {
+      function getSum(total, num) {
+      	num = parseInt(num);
+        return parseInt(total) + num;
+      }
+      let childSeatNo = rideInfo.childSeat.number.reduce(getSum);
+      childCost = childSeatNo * addons_charges[1];
+    } else {
+      childCost = parseInt(rideInfo.childSeat.number) * addons_charges[1]
+    }
+  }
+
+  // earlyMorning cost
+  let arr = rideInfo.pTime.split(" ");
+  if (arr[3] == 'AM' && (parseInt(arr[0]) < 4 || parseInt(arr[0]) == 12) ) {
+    earlyMorningCost = addons_charges[2]
+  }
+
+  request.session.costDetails = {
+    stopsCost,childCost,earlyMorningCost
+  }
+
   request.session.rideInfo = rideInfo;
   response.redirect('/form/returnRide/2');
 });
@@ -235,15 +365,14 @@ router.post('/returnRide/1',urlEncodedMid,function(request,response){
 // second step
 router.get('/returnRide/2',function(request,response){
   let rideInfoData = request.session.rideInfo;
-  let cars = carModel.find({},(err,cars)=>{
-    let stopNumber = 0
-    if (rideInfoData.stops) {
-      stopNumber = rideInfoData.stops.length;
-    }
+  let costDetails = request.session.costDetails;
+
+  let cars = carModel.find({}).sort('order').exec(function(err,cars){
     response.render('form/secondStep',{
-      cars,rideInfoData,stopNumber
+      cars,rideInfoData,costDetails
     });
   });
+
 });
 
 router.post('/returnRide/2',urlEncodedMid,function(request,response){
@@ -255,16 +384,14 @@ router.post('/returnRide/2',urlEncodedMid,function(request,response){
 
     let vehicleFee = parseFloat(request.session.carInfo.charge.vehicleFee);
 
-    let stopNumber = 0
-    if (request.session.rideInfo.stops) {
-      let stopNumber = request.session.rideInfo.stops.length;
-    }
+    let extraCharge = request.session.costDetails.stopsCost + request.session.costDetails.childCost + request.session.costDetails.earlyMorningCost
 
-    let totalCost = perMile + vehicleFee + (stopNumber*10);
+    let totalCost = (perMile + vehicleFee + extraCharge).toFixed(2);
     request.session.cost = totalCost;
 
     response.redirect('/form/returnRide/3');
   });
+
 });
 
 
@@ -273,15 +400,18 @@ router.get('/returnRide/3',urlEncodedMid,function(request,response){
 
   let carInfoData = request.session.carInfo;
   let rideInfoData = request.session.rideInfo;
+  let clientInfoData = request.session.clientInfo;
+  let costDetails = request.session.costDetails
   let cost = request.session.cost;
 
   response.render('return/ThirdStep',{
-    carInfoData,rideInfoData,cost,
-    clientInfo : request.session.clientInfo
+    carInfoData,rideInfoData,clientInfoData,cost,costDetails
   });
+
 });
 
 router.post('/returnRide/3',urlEncodedMid,function(request,response){
+
   let clientInfo = {
     firstname:request.body.firstname,
     lastname:request.body.lastname,
@@ -291,11 +421,12 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
       number:request.body.number,
       holder:request.body.holder,
       eDate:request.body.eDate,
-      cvc:request.body.cvc
+      cvc:request.body.cvc,
+      status:request.body.creditStatus
     }
   }
 
-  request.session.clientInfo = clientInfo
+  request.session.clientInfo = clientInfo;
 
   // random number from 10000 to 19999
   let confirmation = Math.floor((Math.random() * 99999) + 10000);
@@ -310,11 +441,28 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
   let cost = {
     perMile,
     vehicleFee,
-    discount:request.body.discount ? request.body.discount : 0,
-    others:0
+    discount : request.body.discount ? parseInt(request.body.discount) : 0,
+    childSeats : request.session.costDetails.childSeat,
+    earlyMorning : request.session.costDetails.earlyMorningCost,
+    stops : request.session.costDetails.stopsCost,
   }
 
-  request.session.cost = request.body.finalCost
+
+  let flightDetails = {};
+
+  if (request.body.airline_name && request.body.flightNo) {
+    flightDetails.pickUp = {
+      airline : request.body.airline_name,
+      number : request.body.flightNo
+    }
+  }
+
+  if (request.body.airline_name2 && request.body.flightNo2) {
+    flightDetails.dropOff = {
+      airline : request.body.airline_name2,
+      number : request.body.flightNo2
+    }
+  }
 
   let ride = new rideModel({
       rideInfo : request.session.rideInfo,
@@ -323,8 +471,9 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
       comment : request.body.comment,
       status : 'pending',
       totalCost : request.session.cost,
+      flightDetails,
       cost,
-      confirmation
+      confirmation,
   });
 
   let passenger = clientInfo.lastname + ',' + clientInfo.firstname;
@@ -341,6 +490,7 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
           time:ride.rideInfo.pDate,
           pLocation:ride.rideInfo.pLocation,
           dLocation:ride.rideInfo.dLocation,
+          costDetails : request.session.costDetails,
           confirmation,
           cost
         });
@@ -351,6 +501,7 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
           response.json(err);
       }
   });
+
 });
 
 router.get('/returnRide/4',function (request,response) {

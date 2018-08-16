@@ -1,142 +1,149 @@
+
+
 <% include ../layout/header.ejs %>
 
 <div class="container">
 
- <form action="" method="post" enctype="">
+  <form action="" method="post" enctype="">
 
-   <!-- ride info -->
-   <span class="d-block p-2 bg-light mb-3">
-     <div class="form-row">
-       <div class="col-md-12">
-         <div class="form-check">
+    <!-- ride info -->
+    <span class="d-block p-2 bg-light mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Step 1 : Ride Info</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
 
-           <div class="row">
-             <div class="col-md-6 text-primary">
-               <h5>Step 1 : Ride Info</h5>
-             </div>
-           </div>
+    <div class="form-row">
 
-         </div>
-       </div>
-     </div>
-   </span>
+      <!-- service Type -->
+      <div class="col-md-4 mb-3">
+        <div class="form-group">
+          <label>Service Type</label>
+          <select id="serviceType" name="serviceType" class="form-control">
+            <option active value="pointToPoint">Point To Point</option>
+            <option disabled value="roundTrip">Round Trip</option>
+          </select>
+        </div>
 
-   <div class="form-row">
+      </div>
 
-     <!-- service Type -->
-     <div class="col-md-4 mb-3">
-       <div class="form-group">
-         <label>Service Type</label>
-         <select id="serviceType" name="serviceType" class="form-control">
-           <option active value="pointToPoint">Point To Point</option>
-           <option disabled value="roundTrip">Round Trip</option>
-         </select>
-       </div>
-     </div>
+      <!-- pickup date -->
+      <div class="col-md-4 mb-3">
+        <label>PickUp Date <i class="fa fa-calendar" aria-hidden="true"></i></label>
+        <input id="pDate" name="pDate" class="form-control" value="<%= locals.rideInfo.pDate %>" required>
+      </div>
 
-     <!-- pickup date -->
-     <div class="col-md-4 mb-3">
-       <label>PickUp Date <i class="fa fa-calendar" aria-hidden="true"></i></label>
-       <input id="pDate" name="pDate" class="form-control" value="<%= rideInfo.pDate %>" required>
-     </div>
+      <!-- pickup time -->
+      <div class="col-md-4 mb-3">
+        <label>PickUp Time <i class="fa fa-clock-o" aria-hidden="true"></i></label>
+        <input type="text" name="pTime" class="time_element form-control" value="<%= locals.rideInfo.pTime %>" required/>
+        <div class="invalid-feedback">
+          You must select a valid time
+        </div>
+      </div>
 
-     <!-- pickup time -->
-     <div class="col-md-4 mb-3">
-       <label>PickUp Time <i class="fa fa-clock-o" aria-hidden="true"></i></label>
-       <input type="text" name="pTime" class="time_element form-control" value="<%= rideInfo.pTime %>" required/>
-       <div class="invalid-feedback">
-         You must select a valid time
-       </div>
-     </div>
+    </div>
 
-   </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div id="locations">
+          <!-- pickup & drop off Locations -->
+          <div class="col-md-12 mb-3">
+            <label>PickUp Location <i class="fa fa-map-marker" aria-hidden="true"></i></label>
+            <input id="input" type="text" name="pLocation" class="form-control controls"value="<%= locals.rideInfo.dLocation %>" placeholder="PickUp Location" required>
+          </div>
 
-   <div id="locations" class="form-row">
-     <!-- pickup & drop off Locations -->
-     <div class="col-md-6 mb-3">
-       <label>PickUp Location <i class="fa fa-map-marker" aria-hidden="true"></i></label>
-       <input id="input" type="text" name="pLocation" class="form-control controls" value="<%= rideInfo.dLocation %>" required>
-     </div>
-     <div class="col-md-6 mb-3">
-       <label>DropOff Location <i class="fa fa-map-marker" aria-hidden="true"></i></label>
-       <input id="input2" type="text" name="dLocation" class="form-control" value="<%= rideInfo.pLocation %>" required>
-     </div>
-     <div class="invalid-feedback">
-       You must select valid location within USA
-     </div>
-   </div>
+          <!-- Add Stops -->
+          <div id="stopDiv" class="text-center">
+            <div class="col-md-4 mb-3 offset-md-4">
+              <span id="addStop" class="text-lg text-info">
+                <h5>
+                  <i class="fa fa-plus" aria-hidden="true"></i> Add Stop
+                </h5>
+              </span>
+            </div>
+          </div>
 
-   <div class="form-row">
-     <!-- google map -->
-     <div class="col-md-2"></div>
-     <div class="col-md-8 mb-3">
-       <div id="map" style="width:100%;height:400px;" class="form-control"></div>
-       <small id="city"></small>
-     </div>
-   </div>
+          <div class="col-md-12 mb-3">
+            <label>DropOff Location <i class="fa fa-map-marker" aria-hidden="true"></i></label>
+            <input id="input2" type="text" name="dLocation" class="form-control" value="<%= locals.rideInfo.pLocation %>" placeholder="DropOff Location" required>
+          </div>
+        </div>
 
-   <!-- Distance between locations -->
-   <div class="form-row">
-     <div class="col-md-5"></div>
-     <div class="col-md-2 mb-3">
-       <input id="distance" readonly="readonly" name="distance" type="text" placeholder="distance" class="form-control controls text-center">
-     </div>
-   </div>
+        <div class="row mb-3">
+          <div class="col-md-6 mb-3">
+            <label>NO. Of Passengers <i class="fa fa-users" aria-hidden="true"></i></label>
+            <input id="Passengers" min="1" type="number" name="numberOfPersons" value="<%= locals.rideInfo.numberOfPersons %>" class="form-control controls" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label>NO. Of Luggage <i class="fa fa-suitcase" aria-hidden="true"></i></label>
+            <input id="Luggage" min="0" type="number" name="numberOfLuggage" value="<%= locals.rideInfo.numberOfLuggage %>" class="form-control" required>
+          </div>
+        </div>
 
-   <!-- map scripts -->
-   <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDG9bz2pvVUeZTarlJiO9ueVenx8W60TZs&components=country:us&region=US"></script>
-   <script type="text/javascript" src="/js/map.js"></script>
-   <script type="text/javascript" src="/js/validation.js"></script>
+        <div id="childDiv" class="form-row text-center">
+          <div class="col-md-4 offset-md-4 mb-3">
+            <span id="addChild" class="text-info">
+              <h5>
+                <i class="fa fa-plus" aria-hidden="true"></i> Add Child Seat
+              </h5>
+            </span>
+          </div>
+        </div>
 
-   <script>
-    positions[0] = parseFloat(localStorage.getItem("position3"));
-    positions[1] = parseFloat(localStorage.getItem("position4"));
-    positionsFinal[0] = parseFloat(localStorage.getItem("position1"));
-    positionsFinal[1] = parseFloat(localStorage.getItem("position2"));
-    onChangeHandler();
-   </script>
+        <%# agree %>
+        <div class="col-md-12 mb-3">
+          Access To HandiCap <i id="HandiCapInfo" class="fa fa-info-circle text-info display-1" aria-hidden="true" data-toggle="popover" title="Handicap Access" data-content="We collect this data to ensure our vehicles/staff meet your individual needs."></i>
+          <label class="switch">
+            <input id="handicap" type="checkbox" name="handicap" value="true">
+            <span class="slider"></span>
+          </label>
+        </div>
 
+      </div>
+      <div class="col-md-6">
+        <!-- <div class="col-md-2"></div> -->
+        <div class="col-md-12 mb-3">
+          <div id="map" style="width:100%;height:400px;" class="form-control"></div>
+          <small id="city"></small>
+        </div>
 
-   <!-- Add Stops -->
-   <div id="stopDiv" class="form-row">
-     <div class="col-md-5"></div>
-     <div class="col-md-2 mb-3">
-       <button id="addStop" type="button" class="form-control btn btn-dark">Add Stop</button>
-     </div>
-   </div>
+        <!-- Distance between locations -->
+        <div class="form-row">
+          <div class="col-md-4 mb-3 offset-md-4">
+            <input id="distance" readonly="readonly" name="distance" type="text" placeholder="distance" class="form-control controls text-center">
+          </div>
+        </div>
 
-   <div class="form-row">
-     <div class="col-md-6 mb-3">
-       <label>NO. Of Passengers <i class="fa fa-users" aria-hidden="true"></i></label>
-       <input id="Passengers" min="1" type="number" name="numberOfPersons" value="<%= rideInfo.numberOfPersons %>" class="form-control controls" required>
-     </div>
-     <div class="col-md-6 mb-3">
-       <label>NO. Of Luggage <i class="fa fa-suitcase" aria-hidden="true"></i></label>
-       <input id="Luggage" min="0" type="number" name="numberOfLuggage" value="<%= rideInfo.numberOfLuggage %>" class="form-control" required>
-     </div>
-   </div>
+      </div>
+    </div>
 
-   <div id="childDiv" class="form-row text-center">
-     <div class="col-md-2 offset-md-5 mb-3">
-       <button id="addChild" type="button" class="form-control btn btn-success">Add Child Seat</button>
-     </div>
-   </div>
+    <!-- map scripts -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDG9bz2pvVUeZTarlJiO9ueVenx8W60TZs&components=country:us&region=US"></script>
+    <script type="text/javascript" src="/js/map.js"></script>
+    <script type="text/javascript" src="/js/validation.js"></script>
 
-   <%# agree %>
-   <div class="form-group">
-       <div class="form-check">
-           <input id="handicap" name="handicap" class="form-check-input " type="checkbox" value="true">
-           <label class="form-check-label">
-             Access To HandiCap <i id="HandiCapInfo" class="fa fa-info-circle text-info" aria-hidden="true" data-toggle="popover" title="Handicap Access" data-content="We collect this data to ensure our vehicles/staff meet your individual needs."></i>
-           </label>
-       </div>
-   </div>
+    <script>
+     positions[0] = parseFloat(localStorage.getItem("position3"));
+     positions[1] = parseFloat(localStorage.getItem("position4"));
+     positionsFinal[0] = parseFloat(localStorage.getItem("position1"));
+     positionsFinal[1] = parseFloat(localStorage.getItem("position2"));
+     onChangeHandler();
+    </script>
 
-   <div class="col-md-12 text-center">
-     <button id="selectVehicleButton" type="submit" class="btn btn-primary btn-lg mb-3">Select your Vehicle</button>
-   </div>
- </form>
+    <div class="col-md-12 text-center">
+      <button id="selectVehicleButton" type="submit" class="btn btn-primary btn-lg mb-3">Select your Vehicle</button>
+    </div>
+
+  </form>
 </div>
-
 
 <% include ../layout/footer.ejs %>

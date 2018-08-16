@@ -6,11 +6,13 @@ const server = express();
 const mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost:27017/itransportation');
 mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportation');
+
 require("./models/cars");
 require("./models/drivers");
 require("./models/rides");
 require("./models/admins");
 require("./models/promos");
+require("./models/addons");
 
 // deployment requirements
 const compression = require('compression');
@@ -49,6 +51,7 @@ function authMid(request,response,next) {
 }
 
 server.use('/admin/dashboard',authMid);
+server.use('/admin/addons',authMid);
 server.use('/admin/credential',authMid);
 server.use('/admin/list',authMid);
 server.use('/admin/ride',authMid);

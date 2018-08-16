@@ -25,30 +25,37 @@ $(document).ready(function(){
 });
 
 // promoCode validation
-$('#promoCode').on('input',function () {
+$('#apply_promo').click(function (e) {
+
+  e.preventDefault();
+
   let code = $('#promoCode').val();
-  if (code.length == 5) {
-    $.ajax({
-      type : 'GET',
-      url : `/promos/check/${code}`,
-      success : function (data) {
-        if (data.isFound) {
-          $('#promoStatus').html(`
-            valid (${data.value}$)
-            <input id="discount" name="discount" type="text" name="" value="${data.value}" hidden>
-            `).addClass('text-success');
-          let cost = parseInt($('#rideCost').text()) - parseInt(data.value);
-          $('#rideCost').text(cost);
-          $('#promoCode').prop('readonly',true);
-          $('#finalCost').val(cost);
-        } else {
-          $('#promoStatus').text('invalid').removeClass('text-success');
-        }
+  $.ajax({
+    type : 'GET',
+    url : `/promos/check/${code}`,
+    success : function (data) {
+      if (data.isFound) {
+        $('#promoStatus').html(`
+          valid (${data.value}$)
+          <input id="discount" name="discount" type="text" name="" value="${data.value}" hidden>
+          `).addClass('text-success').removeClass('text-danger');
+        let cost = parseFloat($('#final_cost').text()) - parseInt(data.value);
+        $('#final_cost').text(cost);
+        $('#finalCost').val(cost);
+        $('#discount_promo').text(data.value);
+        $('#discount').val(data.value);
+      } else {
+        $('#promoStatus').text('invalid').removeClass('text-success').addClass('text-danger');
+        let discount = parseFloat($('#discount_promo').text());
+        $('#discount_promo').text('0');
+        let cost = parseFloat($('#final_cost').text()) + discount;
+        $('#final_cost').text(cost);
+        $('#finalCost').val(cost);
+        $('#discount').val("0");
       }
-    });
-  } else {
-    $('#promoStatus').text('invalid').removeClass('text-success');
-  }
+    }
+  });
+
 
 });
 
@@ -88,19 +95,19 @@ $('#addChild').click((e)=>{
   e.preventDefault();
   let html_childSeat = `
     <div id="child_${childNo}" class="form-row text-center">
-      <div class="col-md-3 offset-md-4 mb-3">
+      <div class="col-md-5 offset-md-2 mb-3">
         <select id="childSeatType" name="childSeatType" class="form-control">
           <option active value="Infant">Infant (ages 0-1)</option>
           <option value="ToddlerSeat">Toddler Seat (ages 1-3)</option>
           <option value="BoosterSeat">Booster Seat (ages 3-6)</option>
         </select>
       </div>
-      <div class="col-md-1 mb-3">
+      <div class="col-md-2 mb-3">
         <input id="childSeatNumber" min="0" type="number" name="childSeatNumber" class="form-control">
       </div>
       <div class="col-md-1 text-danger text-center">
         <h2>
-          <i id="delChild_${childNo}" class="fa fa-times deleteStops" aria-hidden="true">
+          <i id="delChild_${childNo}" class="fa fa-trash deleteStops" aria-hidden="true">
           </i>
         </h2>
       </div>
@@ -128,13 +135,14 @@ $('#addStop').click((e)=>{
   e.preventDefault();
   let html_stop = `
     <div id="stop_${stopNo}" class="form-row">
-      <div class="col-md-6 offset-md-3 mb-3">
-        <input id="stop${stopNo}" type="text" class="form-control stops" placeholder="add your stop here" name="stops" required>
+      <div class="col-md-8 offset-md-2 mb-3">
+        <input id="stop${stopNo}" type="text" class="form-control stops" placeholder="Add your Stop Point" name="stops" required>
       </div>
       <div class="col-md-1 text-danger text-center">
         <h2>
-          <i id="delStop_${stopNo}" class="fa fa-times deleteStops" aria-hidden="true">
+          <i id="delStop_${stopNo}" class="fa fa-trash deleteStops" aria-hidden="true">
           </i>
+
         </h2>
       </div>
     </div>`;
@@ -166,6 +174,9 @@ $('#addStop').click((e)=>{
         wayPoints.push({
           location : input${stopNo}.value,
           stopover : true
+
+
+
         });
         onChangeHandler();
       });
@@ -173,6 +184,27 @@ $('#addStop').click((e)=>{
    </script>`;
 
  $(js).insertBefore('#stopDiv')
+ stopNo++;
+});
 
-stopNo++;
+// flight Details
+let flight_details;
+$('#flight_details').on('input',(e)=>{
+  if ( flight_details ) {
+    flight_details.appendTo( '.flight1_info' );
+    flight_details = null;
+  } else {
+    flight_details = $( '.flight_details' ).detach();
+  }
+});
+
+// flight Details2
+var flight_details2;
+$('#flight_details2').on('input',(e)=>{
+  if ( flight_details2 ) {
+    flight_details2.appendTo( 'flight2_info' );
+    flight_details2 = null;
+  } else {
+    flight_details2 = $( '.flight_details2' ).detach();
+  }
 });

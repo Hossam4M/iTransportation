@@ -11,8 +11,10 @@ $('.cost').on('input',()=>{
   let perMile = parseFloat($('#costPerMile').val());
   let vehicleFee = parseFloat($('#costVehicleFee').val());
   let discount = parseFloat($('#discount').val());
-  let others = parseFloat($('#others').val());
-  let totalCost = perMile + vehicleFee + others - discount;
+  let stops = parseFloat($('#stopCharge').val());
+  let child = parseFloat($('#childCharge').val());
+  let early = parseFloat($('#earlyCharge').val());
+  let totalCost = perMile + vehicleFee + stops + child + early - discount;
   $('#totalCost').val(totalCost);
 });
 

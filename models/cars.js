@@ -11,6 +11,12 @@ var cars = new Schema({
       type: String,
       required: true
     },
+    order:{
+      type: Number,
+      default:0
+    },
+    startingMiles:Number,
+    startingMiles_charge:Number,
     image:String,
     numberOfPersons:Number,
     numberOfLuggage:Number,

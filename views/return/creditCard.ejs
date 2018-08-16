@@ -1,41 +1,37 @@
-<div class="form-row">
+<div class="form-row col-md-12">
 
   <%# credit number %>
-  <div class="col-md-6 mb-3">
+  <div class="col-md-12 mb-3">
     <label>Credit Card Number <i class="fa fa-credit-card-alt" aria-hidden="true"></i></label>
-    <input id="ccnum" name="number" type="text" class="form-control creditInput" value="<%= clientInfo.creditCard.number %>" required/>
-    <div><small>type: <strong id="ccnum-type">invalid</strong></small></div>
+    <input id="ccnum" name="number" type="text" class="form-control creditInput" value="<%= clientInfoData.creditCard.number %>" required/>
+    <div>
+      <small>type: <strong id="ccnum-type">invalid</strong></small>
+    </div>
   </div>
 
-  <div class="col-md-6 mb-3">
-    <label>Card Holder</label>
-    <input name="holder" type="text" class="form-control" value="<%= clientInfo.creditCard.holder %>" required/>
+  <div class="col-md-12 mb-3">
+    <label>Card Holder Name</label>
+    <input name="holder" type="text" class="form-control" value="<%= clientInfoData.creditCard.holder %>" required/>
   </div>
 
 </div>
 
-<div class="form-row">
+<div class="form-row col-md-12 mb-5">
 
-  <div class="col-md-3 mb-3">
+  <div class="col-md-6 mb-3">
     <label>Expiration Date</label>
-    <input id="expiry" type="text" name="eDate" class="form-control creditInput" placeholder="-- / ----" size="7" type="tel" value="<%= clientInfo.creditCard.eDate %>" required>
+    <input id="expiry" type="text" name="eDate" class="form-control creditInput" placeholder="-- / ----" size="7" type="tel" value="<%= clientInfoData.creditCard.eDate %>" required>
   </div>
 
-  <div class="col-md-3 mb-3">
+  <div class="col-md-6 mb-3">
     <label>CVC</label>
-    <input id="cvc" type="text" name="cvc" class="form-control creditInput" value="<%= clientInfo.creditCard.cvc %>" placeholder="---" size="4" type="tel" required>
+    <input id="cvc" type="text" name="cvc" class="form-control creditInput" placeholder="---" size="4" type="tel" value="<%= clientInfoData.creditCard.cvc %>" required>
   </div>
 
-
-  <div class="col-md-3 mb-3">
-    <label>Promo Code</label>
-    <input id="promoCode" type="text" name="promoCode" class="form-control" placeholder="-----" type="text" maxlength="5">
-    <small>check : <b id="promoStatus">invalid</b></small>
-  </div>
-
-  <div class="col-md-3 mb-3 text-center">
+  <div class="col-md-12 mb-3 text-center">
     <label>Credit Status</label>
-    <h4 id="validation" class="text-success" name="result">valid <i class="fa fa-check" aria-hidden="true"></i></h4>
+    <h4 id="validation" name="result">-</h4>
+    <input type="text" value="" name="creditStatus" value="valid" hidden readonly>
   </div>
 
 </div>

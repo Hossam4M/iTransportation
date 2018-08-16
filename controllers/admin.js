@@ -10,6 +10,7 @@ const rideModel = mongoose.model('rides');
 const carModel = mongoose.model('cars');
 const driverModel = mongoose.model('drivers');
 const adminModel = mongoose.model('admins');
+const addonsModel = mongoose.model('addons');
 
 // Authentication
 router.get('/auth',function(request,response){
@@ -61,11 +62,12 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
       pDate:request.body.pDate,
       pTime:request.body.pTime,
       pLocation:request.body.pLocation,
+      stops:request.body.stop,
       dLocation:request.body.dLocation,
       distance:request.body.distance,
       numberOfPersons:request.body.numberOfPersons,
       numberOfLuggage:request.body.numberOfLuggage,
-      handicap:true,
+      handicap:request.body.handicap == 'Approved' ? 'Approved' : 'Rejected',
     };
     doc['car'] = request.body.carId;
     doc['customerInfo'] = {
@@ -83,10 +85,12 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
     doc['status'] = request.body.status;
     doc['comment'] = request.body.comment;
     doc['cost'] = {
-      perMile:request.body.costPerMile,
-      vehicleFee:request.body.costVehicleFee,
-      discount:request.body.discount,
-      others:request.body.others
+      perMile:parseFloat(request.body.costPerMile),
+      vehicleFee:parseFloat(request.body.costVehicleFee),
+      discount:parseFloat(request.body.discount),
+      earlyMorning:parseFloat(request.body.earlyCharge),
+      stops:parseFloat(request.body.stopCharge),
+      childSeats:parseFloat(request.body.childCharge)
     };
     doc['driver'] = request.body.driver;
     doc['totalCost'] = request.body.totalCost;
@@ -146,6 +150,7 @@ router.post('/ride/driver',urlEncodedMid,(request,response)=>{
       name
     });
   });
+
 })
 
 // visis website
@@ -174,5 +179,22 @@ router.post('/credential',urlEncodedMid,(request,response)=>{
   });
 });
 
+router.get('/addons',(request,response)=>{
+  addonsModel.find({},(err,docs)=>{
+    response.render('admin/addons',{
+      addons:docs[0]
+    });
+  });
+});
+
+router.post('/addons',urlEncodedMid,(request,response)=>{
+  addonsModel.findOne({},(err,doc)=>{
+    doc['stop'] = parseFloat(request.body.stop);
+    doc['child'] = parseFloat(request.body.child);
+    doc['earlyMorning'] = parseFloat(request.body.earlyMorning);
+    doc.save();
+    response.redirect('/admin/dashbord');
+  });
+});
 
 module.exports = router;

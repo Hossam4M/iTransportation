@@ -13,9 +13,6 @@
               <div class="col-md-12 text-primary">
                 <h5>Step 1 : Ride Info <span id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <!-- <div class="col-md-6">
-                <h5 id="edit1" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div> -->
             </div>
 
           </div>
@@ -61,9 +58,6 @@
               <div class="col-md-12 text-primary">
                 <h5>Step 2 : Select your Car <span id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span></h5>
               </div>
-              <!-- <div class="col-md-6">
-                <h5 id="edit2" class="float-right"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</h5>
-              </div> -->
             </div>
 
           </div>
@@ -109,49 +103,124 @@
       <input id="finalCost" name="finalCost" type="text" name="" value="<%= cost %>" hidden>
     </div>
 
-    <div class="form-row text-center mb-2">
+    <div class="form-row text-center mb-5">
       <div class="col-md-12">
-          <h3>Please fill the final details</h3>
+          <h6>Please <b>Log in</b> to your Account or <b>Continue As a Guest</b> to book your reservation </h6>
       </div>
     </div>
 
-    <div class="form-row">
+    <div class="row mb-5">
 
-        <%# firstname %>
-      <div class="col-md-6 mb-3">
-        <label>First name</label>
-        <input name="firstname" type="text" class="form-control" required/>
-      </div>
+      <!-- continue as Guest -->
+      <div class="col-md-6 mb-5">
 
-      <%# lastname %>
-      <div class="col-md-6 mb-3">
-        <label>Last name</label>
-        <input name="lastname" type="text" class="form-control" value="" required>
-      </div>
+        <div class="form-row">
 
-    </div>
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+              <div class="col-md-6">
+                <h5>Continue As Guest</h5>
+              </div>
+            </span>
+          </div>
 
-    <%# email %>
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label>Email <i class="fa fa-envelope" aria-hidden="true"></i></label>
-        <input name="email" type="email" class="form-control" required>
-        <div class="invalid-feedback">
-          Please provide a valid mail
+
+          <%# firstname %>
+          <div class="col-md-6 mb-3">
+            <label>First name</label>
+            <input id="firstname" name="firstname" type="text" class="form-control" required/>
+          </div>
+
+          <%# lastname %>
+          <div class="col-md-6 mb-3">
+            <label>Last name</label>
+            <input id="lastname" name="lastname" type="text" class="form-control" value="" required>
+          </div>
         </div>
+
+        <%# mobile number %>
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label>Phone Number <i class="fa fa-mobile" aria-hidden="true"></i></label>
+            <input id="phone" name="mobileNumber" type="text" class="form-control" required>
+          </div>
+
+          <%# email %>
+
+          <div class="col-md-12 mb-3">
+            <label>Email <i class="fa fa-envelope" aria-hidden="true"></i></label>
+            <input id="email" name="email" type="email" class="form-control" required>
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+          <a id="need_data" href="#">
+            <h6>Why do We need these data ?</h6>
+          </a>
+        </div>
+
+        <div class="col-md-12 text-center">
+          <button id="continue_guest" type="submit" class="btn btn-outline-primary btn-lg mb-3">Continue As Guest</button>
+        </div>
+
+        <div class="col-md-12 text-center mb-3">
+          <small id="guest-validate" class="text-danger"></small>
+        </div>
+
+      </div>
+    </form>
+
+      <!-- <div class="col-md-1 mb-5">
+        <hr class="vertical_hr">
+      </div> -->
+
+      <!-- login to account -->
+      <div class="col-md-6">
+        <form class="" action="" method="post">
+        <div class="form-row">
+
+          <div class="col-md-12">
+            <span class="d-block p-2 bg-light mb-3">
+                <h5 class="ml-3">Log In to your Account (<span class="text-danger">Unavailable Now</span>)</h5>
+            </span>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label>Email Address or Username <i class="fa fa-user" aria-hidden="true"></i></label>
+            <input name="account_username" type="text" class="form-control" required disabled>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label>Password <i class="fa fa-key" aria-hidden="true"></i></label>
+            <input name="account_password" type="password" class="form-control" required disabled>
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+          <a id="forgot_password" href="javascript:void(0);">
+            <h6>Forgot Password ?</h6>
+          </a>
+        </div>
+
+        <div class="col-md-12 text-center">
+          <h6>
+            Don't have an Account ? <a href="javascript:void(0);">Register now</a>
+          </h6>
+          <button id="GoRide" type="submit" class="btn btn-primary btn-lg mb-3" disabled>Log In</button>
+        </div>
+
+
       </div>
 
-      <%# mobile number %>
-      <div class="col-md-3 mb-3">
-        <label>Phone Number <i class="fa fa-mobile" aria-hidden="true"></i></label>
-        <input id="phone" name="mobileNumber" type="tel" class="form-control" required>
-        <div class="invalid-feedback">
-          Please provide a valid number.
-        </div>
-      </div>
     </div>
 
-    <% include ../form/creditCard.ejs %>
+
+
+
+
+  <!--
 
     <div class="form-row">
       <h4>Other Comments <i class="fa fa-comments" aria-hidden="true"></i></h4>
@@ -165,18 +234,19 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
 
-            <!-- Modal Header -->
+
             <div class="modal-header">
               <h4 class="modal-title">Terms & Conditions</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <!-- Modal body -->
+
             <div class="modal-body">
-              Please contact jgirges@airportitransportation.com for privacy policy.
+              iTransportation in Chicago and New York provides professional drivers with all kinds of worldwide ground transportation and limousine needs. Choose from economy sedans, Luxury sedans, SUVs, stretch limos, and party-buses with all-inclusive competitive rates. Please visit www.AirportiTransportation.com or you can download our app on the App-Store: https://itunes.apple.com/us/app/itext-limousine/id1141389221?ls=1&mt=8  or Google-Play: https://play.google.com/store/apps/details?id=com.mak.itransportation or text/call 1-847-630-1735. Thank you for choosing iTransportation.
+              Thank you for choosing iTransportation. All text messages (SMS) that are submitted to 847-630-1735 are considered to be an aggreement from the customer to apply all payments to the credit card that we have on file (or to the most recent credit card that was used by the same customer-account). Cancellation policy is twenty four(24) hours prior to pickup-time or flight-arrival time for sedans, twenty four(24) hours for SUVs, and forty-eight(48) hours for all other vehicles.All deposits are NON-refundable. iTransportation is not liable in the event of a mechanical breakdown while on charter and will only be responsible for making up lost time at a mutually agreed date. The client assumes full financial liability for any damage that is done to the rented limousine that is caused during the duration of the rental by the client or by any members of their party. There is a fee of $100.00 for each carpet/seat-burn. Sanitation fee is $250.00. Alcohol consumption and drug-use is prohibited by law. Any fines will be paid for by the customer. The driver has the right to terminate the client's limo-run without refund (if there is blatant indiscretion on the part of the client(s)). It is Illegal to stand through the sunroof. Smoking is not permitted in all of our limousines. Wait-time pay ($1 per minute) will apply after the first 15 minutes at any location or after the first 30 minutes (domestic arrivals) or after the first 60 minutes (international arrivals) at airports for the prearranged times that are described per the run-sheet or per the flight-arrival time. iText Limousine is not responsible for delays or for the termination of a scheduled run (for example: during the winter) that is caused by unsafe road conditions (ie. not salted, accidents, etc.). iText Limousine is not responsible for articles that are left in the limousine. Balances are to be paid to the driver on the run-date before the beginning of the run. Vehicles cannot be loaded beyond seating capacity. Thank you again for choosing iTransportation.
             </div>
 
-            <!-- Modal footer -->
+
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
@@ -184,11 +254,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-md-12 text-center">
-      <button id="GoRide" type="submit" class="btn btn-primary btn-lg mb-3" disabled>Go On Ride</button>
-    </div>
+    </div> -->
 
   </form>
 </div>

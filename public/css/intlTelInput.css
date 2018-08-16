@@ -14,7 +14,7 @@
  */
  .intl-tel-input {
     position: relative;
-    display: inline-block; }
+    display: block; }
     .intl-tel-input * {
       box-sizing: border-box;
       -moz-box-sizing: border-box; }
@@ -76,7 +76,7 @@
         bottom: 100%;
         margin-bottom: -1px; }
       .intl-tel-input .country-list .flag-box {
-        display: inline-block;
+        display: block;
         width: 20px; }
       @media (max-width: 500px) {
         .intl-tel-input .country-list {
@@ -159,21 +159,21 @@
       padding: 1px; }
       .intl-tel-input.iti-container:hover {
         cursor: pointer; }
-  
+
   .iti-mobile .intl-tel-input.iti-container {
     top: 30px;
     bottom: 30px;
     left: 30px;
     right: 30px;
     position: fixed; }
-  
+
   .iti-mobile .intl-tel-input .country-list {
     max-height: 100%;
     width: 100%; }
     .iti-mobile .intl-tel-input .country-list .country {
       padding: 10px 10px;
       line-height: 1.5em; }
-  
+
   .iti-flag {
     width: 20px; }
     .iti-flag.be {
@@ -962,7 +962,7 @@
     .iti-flag.zw {
       height: 10px;
       background-position: -5610px 0px; }
-  
+
   .iti-flag {
     width: 20px;
     height: 15px;
@@ -974,7 +974,6 @@
     @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
       .iti-flag {
         background-image: url("../images/flags@2x.png"); } }
-  
+
   .iti-flag.np {
     background-color: transparent; }
-  
