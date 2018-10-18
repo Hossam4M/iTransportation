@@ -1,126 +1,244 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles.css">
-    <style media="screen">
-      .container{
-        width: 70%;
-        text-align:center;
-        margin: auto;
+  <meta charset="utf-8">
+  <title>A simple, clean, and responsive HTML invoice template</title>
+
+  <style>
+    .invoice-box {
+      /* max-width: 800px; */
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #eee;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+      font-size: 16px;
+      line-height: 24px;
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+      color: #555;
+    }
+
+    .invoice-box table {
+      width: 100%;
+      line-height: inherit;
+      text-align: left;
+    }
+
+    .invoice-box table td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    .invoice-box table tr.heading-confirmation td:nth-child(2) {
+      text-align: right;
+    }
+
+    .invoice-box table tr.top table td {
+      padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top table td.title {
+      font-size: 45px;
+      line-height: 45px;
+      color: #333;
+    }
+
+    .invoice-box table tr.information table td {
+      padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+    }
+
+    .invoice-box table tr.heading-confirmation td {
+      background: #EBFCDA;
+    }
+
+    .invoice-box table tr.details td {
+      padding-bottom: 20px;
+      /* border-bottom: 1px solid #ddd; */
+    }
+
+    .invoice-box table tr.heading-info td {
+      background: #FFFFFF;
+      text-align: center;
+    }
+
+    .invoice-box table tr.item td {
+      /* border-bottom: 1px solid #eee; */
+    }
+
+    .invoice-box table tr.item.last td {
+      border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+      border-top: 2px solid #eee;
+      font-weight: bold;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
       }
 
-      strong{
-          text-align: left;
-      }
-      .answer,.center{
-          text-align: center;
-      }
-      small{
-          float: right;
-          font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
       }
 
-      table{
-          border-collapse: collapse;
-      }
-      body{
-          padding: 0px;
-      }
-      .line,h3,th{
-          margin: 0px;
-          padding: 0px;
-      }
-      .feesTable{
-          align-content: center;
-      }
+    }
 
-      .costContainer{
-        width: 50%
-      }
+    /** RTL **/
 
-    </style>
-    <title>iTransportation</title>
+    .rtl {
+      direction: rtl;
+      font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    .rtl table {
+      text-align: right;
+    }
+
+    .rtl table tr td:nth-child(2) {
+      text-align: left;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+      <tr class="top">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td class="title">
+                <img src="https://ci3.googleusercontent.com/proxy/-iNHQPVPxnDGXVHkli2nYfPMLmXZJLfCAizuIK99KR6MycliFG8U6Pp0IS-47zHyVG55mJnUoRyIpGRR-TtLDaw3QEaHGNjH5Ph8aSE7pnGYdJQRfT2yI4Od04TiLmz89xpp1SUW=s0-d-e1-ft#https://manage.mylimobiz.com/shared/files%5C43201710119_DaHTbBRfOp8A7PwdIYJn.jpg"
+                  style="width:100%; max-width:400px;">
+              </td>
 
-  <div class="container">
-
-    <div class="center">
-      <img src="https://ci3.googleusercontent.com/proxy/-iNHQPVPxnDGXVHkli2nYfPMLmXZJLfCAizuIK99KR6MycliFG8U6Pp0IS-47zHyVG55mJnUoRyIpGRR-TtLDaw3QEaHGNjH5Ph8aSE7pnGYdJQRfT2yI4Od04TiLmz89xpp1SUW=s0-d-e1-ft#https://manage.mylimobiz.com/shared/files%5C43201710119_DaHTbBRfOp8A7PwdIYJn.jpg" width="50%" alt="">
-      <h2>Confirmation #<%= confirmation %></h2>
-       <hr>
-       <p>Thank You for traveling with iTransportation! Below please find your confirmation. If any of the information appears to be incorrect, please contact our office immediately to correct it.</p>
-       <hr>
-    </div>
-
-    <h3><strong>Ride Details</strong></h3>
-    <table border="0">
-        <tr>
-            <th><strong>Method:</strong></th>
-            <td><p class="answer"><%= serviceType %></p></td>
-        </tr>
-        <tr>
-            <th><strong>Transaction Amount:</strong></th>
-            <td><p class="answer"><%= totalCost %></p></td>
-        </tr>
-        <tr>
-            <th><strong>Passenger:</strong></th>
-            <td><p class="answer"><%= name %></p></td>
-        </tr>
-        <tr>
-            <th><strong>Trip Confirmation:</strong></th>
-            <td><p class="answer"><%= confirmation %></p></td>
-        </tr>
-        <tr>
-            <th><strong>Trip Date & Time:</strong></th>
-            <td><p class="answer">	<%= date %> @ <%= time %> </p></td>
-        </tr>
-        <tr>
-            <th><strong>Pick-up Location:</strong></th>
-            <td><p class="answer"><%= pLocation %></p></td>
-        </tr>
-        <tr>
-            <th><strong>Drop-off Location:</strong></th>
-            <td><p class="answer"><%= dLocation %></p></td>
-        </tr>
-    </table>
-
-    <hr>
-    <tr>
-      <h3><strong>Fees & Charges Details</strong></h3>
-      <div class="costContainer">
-        <tr>
-          <table border="0">
-            <tr>
-                <th><strong>Per Mile : <strong></th>
-                <td class="answer"><p class="answer"> <%= cost.perMile%> </p></td>
-            </tr>
-            <tr>
-                <th><strong>Vehicle Fee : <strong></th>
-                <td class="answer"><p class="answer"><%= cost.vehicleFee %></p></td>
-            </tr>
-            <tr>
-                <th><strong>Discount : <strong></th>
-                <td class="answer"><p ><%= cost.discount %></p></td>
-            </tr>
-            <tr>
-                <th><strong>Others : <strong></th>
-                <td class="answer"><p ><%= cost.others %></p></td>
-            </tr>
-            <tr>
-                <th><strong>Total Cost : <strong></th>
-                <td class="answer"><p ><%= totalCost %></p></td>
+              <td style="text-align:right">
+              </td>
             </tr>
           </table>
-        </tr>
-      </div>
-    </tr>
+        </td>
+      </tr>
 
+
+      <tr class="heading-confirmation heading">
+        <td>
+          For Confirmation #<%= confirmation %>
+        </td>
+        <td style="text-align:right">
+          TimeStamp : <%= timeStamp %>
+        </td>
+      </tr>
+
+      <tr class="heading-info destails">
+        <td colspan="2">
+          Thank You for traveling with iTransportation! Below please find your confirmation. If any of the information appears to be incorrect, please contact our office immediately to correct it.
+        </td>
+      </tr>
+
+      <tr class="heading">
+        <td>
+          Ride Information
+        </td>
+        <td></td>
+      </tr>
+
+      <tr class="details">
+        <td style="font-weight:bold">Method</td>
+        <td><%= serviceType %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Transaction Amount:</td>
+        <td><%= totalCost %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Passenger</td>
+        <td><%= name %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Trip Confirmation</td>
+        <td><%= confirmation %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Trip Date & Time</td>
+        <td><%= date %> @ <%= time %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Pick-up Location</td>
+        <td><%= pLocation %></td>
+      </tr>
+      <tr class="details">
+        <td style="font-weight:bold">Drop-off Location</td>
+        <td><%= dLocation %></td>
+      </tr>
+
+      <tr class="heading">
+        <td>
+          Fees & Charges Details
+        </td>
+        <td></td>
+      </tr>
+
+      <tr class="item" style="text-align:right">
+        <td>Per Mile</td>
+        <td>$ <%= cost.perMile %></td>
+      </tr>
+      <tr class="item" style="text-align:right">
+        <td>Vehicle Fee</td>
+        <td>$ <%= cost.vehicleFee %></td>
+      </tr>
+      <tr class="item" style="text-align:right">
+        <td>Discount</td>
+        <td>$ <%= cost.discount %></td>
+      </tr>
+      <tr class="item" style="text-align:right">
+        <td>Child Seats</td>
+        <td>$ <%= cost.childSeats %></td>
+      </tr>
+      <tr class="item" style="text-align:right">
+        <td>Stop Points</td>
+        <td>$ <%= cost.stops %></td>
+      </tr>
+      <tr class="item" style="text-align:right;">
+        <td>Early Morning</td>
+        <td>$ <%= cost.earlyMorning %></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr class="item" style="text-align:right;font-weight:bold">
+        <td>Reservation Total</td>
+        <td>$ <%= totalCost %></td>
+      </tr>
+      <tr class="item" style="text-align:right;color:green;font-weight:bold">
+        <td>Payment Deposit</td>
+        <td>$ 0</td>
+      </tr>
+      <tr class="item" style="text-align:right;color:red;font-weight:bold">
+        <td>Total Due</td>
+        <td>$ <%= totalCost %></td>
+      </tr>
+
+    </table>
   </div>
-
-
 </body>
+
 </html>

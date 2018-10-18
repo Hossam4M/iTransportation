@@ -139,6 +139,37 @@
       </tbody>
     </table>
 
+  <!-- Flight Details -->
+  <% if(ride.flightDetails.pickUp) {%>
+    <span class="d-block p-2 bg-light text-primary mb-3">
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <div class="row">
+              <div class="col-md-6 text-primary">
+                <h5>Flight Details</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Airline Co.</th>
+          <td>
+            <input name="airline" class="form-control" type="text" value="<%= ride.flightDetails.pickUp.airline%>">
+          </td>
+          <th scope="row">Flight Number</th>
+          <td>
+            <input name="flightNumber" class="form-control" type="text" value="<%= ride.flightDetails.pickUp.number%>">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
 
   <!-- client personal information -->
     <span class="d-block p-2 bg-light text-primary mb-3">
@@ -201,31 +232,43 @@
     </div>
   </span>
 
-  <table class="table">
-    <tbody>
-      <tr>
-        <th scope="row">Credit Card Number</th>
-        <td>
-          <input name="number" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.number %>">
-        </td>
-        <th scope="row">Expiration Date</th>
-        <td>
-          <input name="eDate" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.eDate %>">
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">Card Holder</th>
-        <td>
-          <input name="holder" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.holder %>">
-        </td>
-        <th scope="row">CVC</th>
-        <td>
-          <input name="cvc" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.cvc %>">
-        </td>
+  <% if(ride.customerInfo.creditCard){ %>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Credit Card Number</th>
+          <td>
+            <input name="number" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.number %>">
+          </td>
+          <th scope="row">Expiration Date</th>
+          <td>
+            <input name="eDate" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.eDate %>">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Card Holder</th>
+          <td>
+            <input name="holder" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.holder %>">
+          </td>
+          <th scope="row">CVC</th>
+          <td>
+            <input name="cvc" class="form-control" type="text" value="<%= ride.customerInfo.creditCard.cvc %>">
+          </td>
 
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
+  <% } else { %>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Status</th>
+          <td>the Customer prefers to pay in Cash</td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
+
 
 
   <!-- Trip Cost In Detail  -->
@@ -323,7 +366,7 @@
 
   <!-- selecting Status -->
   <div class="col-md-12 text-center">
-    <button class="btn btn-dark mb-5 btn-lg" type="submit" name="button">Save</button>
+    <button class="btn btn-primary mb-5 btn-lg" type="submit" name="button">Save & Send E-mail</button>
   </div>
 </form>
 

@@ -20,6 +20,7 @@ $(document).ready(function(){
 $('#HandiCapInfo').click(function () {
   $('[data-toggle="popover"]').popover('toggle');
 });
+
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
@@ -198,13 +199,13 @@ $('#flight_details').on('input',(e)=>{
   }
 });
 
-// flight Details2
-var flight_details2;
-$('#flight_details2').on('input',(e)=>{
-  if ( flight_details2 ) {
-    flight_details2.appendTo( 'flight2_info' );
-    flight_details2 = null;
+// credit details
+let credit_details;
+$('#credit_details').on('input',(e)=>{
+  if ( credit_details ) {
+    credit_details.appendTo('.credit_info');
+    credit_details = null;
   } else {
-    flight_details2 = $( '.flight_details2' ).detach();
+    credit_details = $('.credit_details').detach();
   }
 });

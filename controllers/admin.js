@@ -12,6 +12,22 @@ const driverModel = mongoose.model('drivers');
 const adminModel = mongoose.model('admins');
 const addonsModel = mongoose.model('addons');
 
+const fs = require('fs');
+const ejs = require('ejs');
+
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  // service : 'gmail',
+  port: 465,
+  secure: true, // use SSL
+  auth: {
+      user: 'hosstestmina', // generated ethereal user
+      pass: 'test123456$' // generated ethereal password
+  },
+  tls: {rejectUnauthorized: false}
+});
+
 // Authentication
 router.get('/auth',function(request,response){
   var message = request.flash('message');
@@ -95,11 +111,44 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
     doc['driver'] = request.body.driver;
     doc['totalCost'] = request.body.totalCost;
     doc['confirmation'] = request.body.confirmation;
-    doc.save();
+    doc.save((err)=>{
+      sendMail({
+        timeStamp:new Date(),
+        email:request.body.email,
+        serviceType:request.body.serviceType,
+        totalCost:request.body.totalCost,
+        name:request.body.firstname + " " + request.body.firstname,
+        date:request.body.pDate,
+        time:request.body.pTime,
+        pLocation:request.body.pLocation,
+        dLocation:request.body.dLocation,
+        costDetails : doc['cost'],
+        confirmation : request.body.confirmation,
+        cost : doc['cost'],
+      });
+    });
     response.redirect('/admin/dashboard');
   });
 
 });
+
+function sendMail(mailData) {
+  fs.readFile('views/mail/confirmation.ejs','utf-8',(err,data)=>{
+    let mainOptions = {
+      to: mailData.email,
+      subject: 'iTransportation Automated Mail',
+      html: ejs.render(data, mailData)
+    };
+    transporter.sendMail(mainOptions, function (err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Message sent: ' + info.response);
+      }
+    });
+  });
+
+}
 
 // update list
 router.post('/ride/update',urlEncodedMid,(request,response)=>{
@@ -114,6 +163,18 @@ router.post('/ride/update',urlEncodedMid,(request,response)=>{
     }
     doc.save();
     response.send({});
+  });
+});
+
+// delete Ride
+router.get('/ride/delete/:id',urlEncodedMid,(request,response)=>{
+  rideModel.remove({'_id':new ObjectId(request.params.id)},(err)=>{
+    if(!err){
+      response.send({});
+    } else {
+      response.json(err);
+    }
+
   });
 });
 

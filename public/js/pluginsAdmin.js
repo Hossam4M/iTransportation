@@ -1,10 +1,23 @@
 // clicking ride to list details
-$('.ride').click((e)=>{
+$('.edit_ride').click((e)=>{
   e.preventDefault();
-  let id = $(e.target).parent().attr('id');
+  let idString = $(e.target).attr('id');
+  let arr = idString.split('_');
+  let id = arr[1];
   window.location.href = '/admin/list/' + id;
 });
 
+$('.delete_ride').click((e)=>{
+  e.preventDefault();
+  let idString = $(e.target).attr('id');
+  let arr = idString.split('_');
+  let id = arr[1];
+  $.ajax({
+    type : 'GET',
+    url : `/admin/ride/delete/${id}`,
+  });
+  $('#'+id).remove();
+});
 
 // editing payment Details
 $('.cost').on('input',()=>{
@@ -73,7 +86,7 @@ $('#addPromo').click(function(e){
   let valueInput = $('#value').val();
   let codeInput = $('#code').val();
 
-  let isDublicate = names.includes(codeInput.toUpperCase())
+  let isDublicate = names.includes(codeInput)
 
   if (valueInput && codeInput && !isDublicate){
     $.ajax({
@@ -81,10 +94,11 @@ $('#addPromo').click(function(e){
       url : `/promos/add/${codeInput}/${valueInput}`,
       success : function (data) {
         let promoRecord = `
-        <tr>
+        <tr  id="promo_${data.id}">
           <th class="promoRecord" scope="row">${data.code}</th>
           <td>${data.value}</td>
           <td class="text-success">${data.numberUsed}</td>
+          <td><button id="${data.id}" class="btn btn-danger delete_promo">Delete</button></td>
         </tr>
         `;
         $('#promoTable').append(promoRecord);
@@ -101,6 +115,19 @@ $('#addPromo').click(function(e){
     $(duplicateMsg).insertAfter('#promoForm');
   }
 
+});
+
+// delete promo
+$('.delete_promo').click((e)=>{
+  e.preventDefault();
+  let id = $(e.target).attr('id');
+  console.log(id);
+  console.log('ere');
+  $.ajax({
+    type : 'GET',
+    url : `/promos/delete/${id}`,
+  });
+  $('#promo_'+id).remove();
 });
 
 // confirm password

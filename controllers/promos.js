@@ -20,7 +20,7 @@ router.get('/add/:code/:value',(request,response)=>{
 
       else {
         let promo = new promoModel({
-          code: request.params.code.toUpperCase(),
+          code: request.params.code,
           value: request.params.value,
           numberUsed: 0
         });
@@ -28,7 +28,8 @@ router.get('/add/:code/:value',(request,response)=>{
         promo.save(function(err,doc){
             if(!err){
                 response.send({
-                  code: request.params.code.toUpperCase(),
+                  id:doc._id,
+                  code: request.params.code,
                   value: request.params.value,
                   numberUsed: 0,
                   isDublicate: false
@@ -38,6 +39,18 @@ router.get('/add/:code/:value',(request,response)=>{
             }
         });
       }
+  });
+});
+
+router.get('/delete/:id',(request,response)=>{
+  console.log('enter');
+  promoModel.remove({_id:new ObjectId(request.params.id)},function(err){
+    if(!err){
+      console.log('done');
+      response.send({});
+    } else {
+      response.json(err);
+    }
   });
 });
 

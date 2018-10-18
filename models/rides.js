@@ -30,11 +30,14 @@ var rides = new Schema({
       email:String,
       mobileNumber:String,
       creditCard:{
-        number:String,
-        holder:String,
-        eDate:String,
-        cvc:String,
-        status:String
+        type:{
+          number:String,
+          holder:String,
+          eDate:String,
+          cvc:String,
+          status:String
+        },
+        default:null
       }
     },
     comment:String,
@@ -61,13 +64,6 @@ var rides = new Schema({
     },
     flightDetails:{
       pickUp:{
-        type:{
-          airline:String,
-          number:String
-        },
-        default:null
-      },
-      dropOff:{
         type:{
           airline:String,
           number:String

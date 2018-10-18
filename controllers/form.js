@@ -15,8 +15,8 @@ const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const fs = require('fs');
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
   host: 'smtp.gmail.com',
+  // service : 'gmail',
   port: 465,
   secure: true, // use SSL
   auth: {
@@ -178,18 +178,24 @@ router.get('/newRide/3/extend',function(request,response){
 
 router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
 
-  let clientInfo = {
-    firstname:request.body.firstname,
-    lastname:request.body.lastname,
-    email:request.body.email,
-    mobileNumber:request.body.mobileNumber,
-    creditCard:{
+  let creditDetails = {};
+
+  if (request.body.number && request.body.holder &&  request.body.eDate && request.body.cvc && request.body.creditStatus) {
+    creditDetails = {
       number:request.body.number,
       holder:request.body.holder,
       eDate:request.body.eDate,
       cvc:request.body.cvc,
       status:request.body.creditStatus
     }
+  }
+
+  let clientInfo = {
+    firstname:request.body.firstname,
+    lastname:request.body.lastname,
+    email:request.body.email,
+    mobileNumber:request.body.mobileNumber,
+    creditCard:creditDetails
   }
 
   request.session.clientInfo = clientInfo;
@@ -222,13 +228,6 @@ router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
     }
   }
 
-  if (request.body.airline_name2 && request.body.flightNo2) {
-    flightDetails.dropOff = {
-      airline : request.body.airline_name2,
-      number : request.body.flightNo2
-    }
-  }
-
   let ride = new rideModel({
       rideInfo : request.session.rideInfo,
       car : request.session.carInfo._id,
@@ -247,6 +246,7 @@ router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
       if(!err){
         // calling sendMail function
         sendMail({
+          timeStamp:new Date(),
           email:clientInfo.email,
           serviceType:ride.rideInfo.serviceType,
           totalCost:request.session.cost,
@@ -279,18 +279,19 @@ router.get('/newRide/4',function (request,response) {
 });
 
 function sendMail(mailData) {
-  let data = fs.readFileSync('views/mail/confirmation.ejs','utf-8')
-  let mainOptions = {
-    to: mailData.email,
-    subject: 'iTransportation Automated Mail',
-    html: ejs.render(data, mailData)
-  };
-  transporter.sendMail(mainOptions, function (err, info) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Message sent: ' + info.response);
-    }
+  fs.readFile('views/mail/confirmation.ejs','utf-8',(err,data)=>{
+    let mainOptions = {
+      to: mailData.email,
+      subject: 'iTransportation Automated Mail',
+      html: ejs.render(data, mailData)
+    };
+    transporter.sendMail(mainOptions, function (err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Message sent: ' + info.response);
+      }
+    });
   });
 }
 
@@ -413,18 +414,24 @@ router.get('/returnRide/3',urlEncodedMid,function(request,response){
 
 router.post('/returnRide/3',urlEncodedMid,function(request,response){
 
-  let clientInfo = {
-    firstname:request.body.firstname,
-    lastname:request.body.lastname,
-    email:request.body.email,
-    mobileNumber:request.body.mobileNumber,
-    creditCard:{
+  let creditDetails = {};
+
+  if (request.body.number && request.body.holder &&  request.body.eDate && request.body.cvc && request.body.creditStatus) {
+    creditDetails = {
       number:request.body.number,
       holder:request.body.holder,
       eDate:request.body.eDate,
       cvc:request.body.cvc,
       status:request.body.creditStatus
     }
+  }
+
+  let clientInfo = {
+    firstname:request.body.firstname,
+    lastname:request.body.lastname,
+    email:request.body.email,
+    mobileNumber:request.body.mobileNumber,
+    creditCard:creditDetails
   }
 
   request.session.clientInfo = clientInfo;
@@ -455,13 +462,6 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
     flightDetails.pickUp = {
       airline : request.body.airline_name,
       number : request.body.flightNo
-    }
-  }
-
-  if (request.body.airline_name2 && request.body.flightNo2) {
-    flightDetails.dropOff = {
-      airline : request.body.airline_name2,
-      number : request.body.flightNo2
     }
   }
 

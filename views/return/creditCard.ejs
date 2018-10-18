@@ -1,39 +1,51 @@
-<div class="form-row col-md-12">
+<div class="credit_info">
 
-  <%# credit number %>
-  <div class="col-md-12 mb-3">
-    <label>Credit Card Number <i class="fa fa-credit-card-alt" aria-hidden="true"></i></label>
-    <input id="ccnum" name="number" type="text" class="form-control creditInput" value="<%= clientInfoData.creditCard.number %>" required/>
-    <div>
-      <small>type: <strong id="ccnum-type">invalid</strong></small>
+  <div class="credit_details">
+
+    <div class="form-row col-md-12">
+
+      <%# credit number %>
+      <div class="col-md-12 mb-3">
+        <label>Credit Card Number <i class="fa fa-credit-card-alt" aria-hidden="true"></i></label>
+        <input id="ccnum" name="number" type="text" class="form-control creditInput" value="<%= clientInfoData.creditCard.number %>" required/>
+        <div>
+          <small>type: <strong id="ccnum-type">invalid</strong></small>
+        </div>
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label>Card Holder Name</label>
+        <input name="holder" type="text" class="form-control" value="<%= clientInfoData.creditCard.holder %>" required/>
+      </div>
+
+    </div>
+
+    <div class="form-row col-md-12 mb-5">
+
+      <div class="col-md-6 mb-3">
+        <label>Expiration Date</label>
+        <input id="expiry" type="text" name="eDate" class="form-control creditInput" placeholder="-- / ----" size="7" type="tel" value="<%= clientInfoData.creditCard.eDate %>" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>CVC</label>
+        <input id="cvc" type="text" name="cvc" class="form-control creditInput" placeholder="---" size="4" type="tel" value="<%= clientInfoData.creditCard.cvc %>" required>
+      </div>
+
+      <div class="col-md-12 mb-3 text-center">
+        <label>Credit Status</label>
+        <h4 id="validation" name="result">-</h4>
+        <input type="text" value="" name="creditStatus" value="valid" hidden readonly>
+      </div>
+
     </div>
   </div>
-
-  <div class="col-md-12 mb-3">
-    <label>Card Holder Name</label>
-    <input name="holder" type="text" class="form-control" value="<%= clientInfoData.creditCard.holder %>" required/>
-  </div>
-
 </div>
 
-<div class="form-row col-md-12 mb-5">
-
-  <div class="col-md-6 mb-3">
-    <label>Expiration Date</label>
-    <input id="expiry" type="text" name="eDate" class="form-control creditInput" placeholder="-- / ----" size="7" type="tel" value="<%= clientInfoData.creditCard.eDate %>" required>
-  </div>
-
-  <div class="col-md-6 mb-3">
-    <label>CVC</label>
-    <input id="cvc" type="text" name="cvc" class="form-control creditInput" placeholder="---" size="4" type="tel" value="<%= clientInfoData.creditCard.cvc %>" required>
-  </div>
-
-  <div class="col-md-12 mb-3 text-center">
-    <label>Credit Status</label>
-    <h4 id="validation" name="result">-</h4>
-    <input type="text" value="" name="creditStatus" value="valid" hidden readonly>
-  </div>
-
+<div class="form-check-inline col-md-12 mb-5">
+  <label class="form-check-label">
+    <input id="credit_details" type="checkbox" class="form-check-input">I Prefer to Pay in Cash
+  </label>
 </div>
 
 <script type="text/javascript" src="/js/jquery.payform.js"></script>

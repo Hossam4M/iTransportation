@@ -11,17 +11,20 @@
           <th scope="col">Promo Code</th>
           <th scope="col">Value ($)</th>
           <th scope="col">Used no.</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody id="promoTable">
 
         <% promos.forEach((promo)=>{ %>
-          <tr>
+          <tr  id="promo_<%= promo._id %>">
             <th class="promoRecord" scope="row"><%= promo.code %></th>
             <td><%= promo.value %></td>
             <td class="<% if(promo.numberUsed == 0){ %>text-success<% }else{ %> text-danger<% } %>"><%= promo.numberUsed %></td>
+            <td><button id="<%= promo._id %>" class="btn btn-danger delete_promo">Delete</button></td>
           </tr>
         <% }); %>
+
 
       </tbody>
     </table>
