@@ -1,6 +1,9 @@
 // datepicker
 $( function() {
-  $( "#pDate" ).datepicker();
+  $( "#pDate" ).datepicker({
+    gotoCurrent: true,
+    minDate: new Date()
+  });
 } );
 
 // timepicker
@@ -56,8 +59,6 @@ $('#apply_promo').click(function (e) {
       }
     }
   });
-
-
 });
 
 // edit buttons

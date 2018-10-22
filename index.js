@@ -4,7 +4,7 @@ const server = express();
 
 // Startup database connection
 const mongoose = require('mongoose');
-//mongoose.connect('mongodb://localhost:27017/itransportation');
+// mongoose.connect('mongodb://localhost:27017/itransportation');
 mongoose.connect('mongodb://admin:admin1234@ds233531.mlab.com:33531/itransportation');
 
 require("./models/cars");

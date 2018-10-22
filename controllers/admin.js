@@ -112,20 +112,22 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
     doc['totalCost'] = request.body.totalCost;
     doc['confirmation'] = request.body.confirmation;
     doc.save((err)=>{
-      sendMail({
-        timeStamp:new Date(),
-        email:request.body.email,
-        serviceType:request.body.serviceType,
-        totalCost:request.body.totalCost,
-        name:request.body.firstname + " " + request.body.firstname,
-        date:request.body.pDate,
-        time:request.body.pTime,
-        pLocation:request.body.pLocation,
-        dLocation:request.body.dLocation,
-        costDetails : doc['cost'],
-        confirmation : request.body.confirmation,
-        cost : doc['cost'],
-      });
+      if(request.body.sendFlag == "send"){
+        sendMail({
+          timeStamp:new Date(),
+          email:request.body.email,
+          serviceType:request.body.serviceType,
+          totalCost:request.body.totalCost,
+          name:request.body.firstname + " " + request.body.firstname,
+          date:request.body.pDate,
+          time:request.body.pTime,
+          pLocation:request.body.pLocation,
+          dLocation:request.body.dLocation,
+          costDetails : doc['cost'],
+          confirmation : request.body.confirmation,
+          cost : doc['cost'],
+        });
+      }
     });
     response.redirect('/admin/dashboard');
   });
@@ -257,5 +259,6 @@ router.post('/addons',urlEncodedMid,(request,response)=>{
     response.redirect('/admin/dashbord');
   });
 });
+
 
 module.exports = router;

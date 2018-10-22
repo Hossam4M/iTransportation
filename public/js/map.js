@@ -86,6 +86,10 @@ searchBox.addListener('places_changed', function() {
    positions[0] = marker.getPosition().lat();
    positions[1] = marker.getPosition().lng();
 
+   if (positionsFinal[0] && positionsFinal[1]) {
+     onChangeHandler();
+   }
+
    localStorage.setItem("position1", positions[0].toString());
    localStorage.setItem("position2", positions[1].toString());
 

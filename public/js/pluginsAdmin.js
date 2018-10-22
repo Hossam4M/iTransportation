@@ -16,7 +16,7 @@ $('.delete_ride').click((e)=>{
     type : 'GET',
     url : `/admin/ride/delete/${id}`,
   });
-  $('#'+id).remove();
+  window.location.href = '/admin/dashboard';
 });
 
 // editing payment Details
@@ -146,4 +146,11 @@ $('#passwordConfirm').on('input',(e)=>{
     $('#confirmComment').removeClass('text-success');
     $('#confirmComment').text('* there is no match between passwords')
   }
+});
+
+// save without sending Email
+$('.save_btn').click((e)=>{
+  e.preventDefault();
+  $('#sendFlag').val("");
+  $('#saveRideForm').submit();
 });

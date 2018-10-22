@@ -61,6 +61,10 @@ var rides = new Schema({
         type:Number,
         default:0
       },
+      gratuity:{
+        type:Number,
+        default:0
+      },
     },
     flightDetails:{
       pickUp:{
