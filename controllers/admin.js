@@ -127,6 +127,22 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
           confirmation : request.body.confirmation,
           cost : doc['cost'],
         });
+        
+        sendMail({
+          timeStamp:new Date(),
+          email:'josephrefaat@gmail.com',
+          serviceType:request.body.serviceType,
+          totalCost:request.body.totalCost,
+          name:request.body.firstname + " " + request.body.firstname,
+          date:request.body.pDate,
+          time:request.body.pTime,
+          pLocation:request.body.pLocation,
+          dLocation:request.body.dLocation,
+          costDetails : doc['cost'],
+          confirmation : request.body.confirmation,
+          cost : doc['cost'],
+        });
+        
       }
     });
     response.redirect('/admin/dashboard');
