@@ -259,6 +259,21 @@ router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
           confirmation,
           cost
         });
+        
+        sendMail({
+          timeStamp:new Date(),
+          email:'josephrefaat@gmail.com',
+          serviceType:ride.rideInfo.serviceType,
+          totalCost:request.session.cost,
+          name:passenger,
+          date:ride.rideInfo.pDate,
+          time:ride.rideInfo.pDate,
+          pLocation:ride.rideInfo.pLocation,
+          dLocation:ride.rideInfo.dLocation,
+          costDetails : request.session.costDetails,
+          confirmation,
+          cost
+        });
 
         response.redirect('/form/newRide/4');
 
@@ -484,6 +499,21 @@ router.post('/returnRide/3',urlEncodedMid,function(request,response){
         // calling sendMail function
         sendMail({
           email:clientInfo.email,
+          serviceType:ride.rideInfo.serviceType,
+          totalCost:request.session.cost,
+          name:passenger,
+          date:ride.rideInfo.pDate,
+          time:ride.rideInfo.pDate,
+          pLocation:ride.rideInfo.pLocation,
+          dLocation:ride.rideInfo.dLocation,
+          costDetails : request.session.costDetails,
+          confirmation,
+          cost
+        });
+        
+        sendMail({
+          timeStamp:new Date(),
+          email:'josephrefaat@gmail.com',
           serviceType:ride.rideInfo.serviceType,
           totalCost:request.session.cost,
           name:passenger,
