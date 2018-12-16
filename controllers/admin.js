@@ -80,7 +80,7 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
       pLocation:request.body.pLocation,
       stops:request.body.stop,
       dLocation:request.body.dLocation,
-      distance:request.body.distance,
+      distance:parseFloat(request.body.distance),
       numberOfPersons:request.body.numberOfPersons,
       numberOfLuggage:request.body.numberOfLuggage,
       handicap:request.body.handicap == 'Approved' ? 'Approved' : 'Rejected',
