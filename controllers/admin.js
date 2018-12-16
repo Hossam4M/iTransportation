@@ -22,8 +22,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // use SSL
   auth: {
-      user: 'hosstestmina', // generated ethereal user
-      pass: 'test123456$' // generated ethereal password
+      user: 'itransportationreservations', // generated ethereal user
+      pass: 'hosammina' // generated ethereal password
   },
   tls: {rejectUnauthorized: false}
 });
