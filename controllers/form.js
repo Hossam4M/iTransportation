@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
   secure: true, // use SSL
   auth: {
       user: 'itransportationreservations', // generated ethereal user
-      pass: 'hossammina' // generated ethereal password
+      pass: 'hosammina' // generated ethereal password
   },
   tls: {rejectUnauthorized: false}
 });
