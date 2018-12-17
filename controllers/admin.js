@@ -22,8 +22,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // use SSL
   auth: {
-      user: 'itransportationreservations', // generated ethereal user
-      pass: 'hosammina' // generated ethereal password
+      user: 'hosstestmina', // generated ethereal user
+      pass: 'test123456$' // generated ethereal password
   },
   tls: {rejectUnauthorized: false}
 });
@@ -127,7 +127,7 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
           confirmation : request.body.confirmation,
           cost : doc['cost'],
         });
-        
+
         sendMail({
           timeStamp:new Date(),
           email:'josephrefaat@gmail.com',
@@ -142,7 +142,7 @@ router.post('/list/:id',urlEncodedMid,(request,response)=>{
           confirmation : request.body.confirmation,
           cost : doc['cost'],
         });
-        
+
       }
     });
     response.redirect('/admin/dashboard');
