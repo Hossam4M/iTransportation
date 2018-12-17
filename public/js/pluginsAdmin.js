@@ -31,9 +31,9 @@ $('.cost').on('input',()=>{
   $('#totalCost').val(totalCost);
 });
 
-$('.carCost,.distance').on('input',()=>{
+$('.carCost,#distanceValue').on('input',()=>{
   console.log('input');
-  let distance = parseFloat($('.distance').val());
+  let distance = parseFloat($('#distanceValue').val());
   let perMile = parseFloat($('#perMile').val());
   let vehicleFee = parseFloat($('#vehicleFee').val());
   $('#costPerMile').val(perMile*distance);
