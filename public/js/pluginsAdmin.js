@@ -35,13 +35,19 @@ $('.carCost,#distanceValue').on('input',()=>{
   console.log('input');
   let distance = parseFloat($('#distanceValue').val());
   let perMile = parseFloat($('#perMile').val());
+  console.log(perMile);
   let vehicleFee = parseFloat($('#vehicleFee').val());
   $('#costPerMile').val(perMile*distance);
   $('#costVehicleFee').val(vehicleFee);
   perMile = parseFloat($('#costPerMile').val());
   let discount = parseFloat($('#discount').val());
-  let others = parseFloat($('#others').val());
+  let others = parseFloat($('#stopCharge').val()) + parseFloat($('#childCharge').val()) + parseFloat($('#earlyCharge').val());
   let totalCost = perMile + vehicleFee + others - discount;
+  console.log("distance",distance);
+  console.log("perMile",perMile);
+  console.log("vehicleFee",vehicleFee);
+  console.log("discount",discount);
+  console.log("others",others);
   $('#totalCost').val(totalCost);
 
 });
