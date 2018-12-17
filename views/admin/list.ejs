@@ -83,7 +83,7 @@
       <tr>
         <th scope="row">Distance(mile)</th>
         <td>
-          <input id="distanceValue" name="distance" class="form-control" type="number" value="<%= ride.rideInfo.distance%>">
+          <input id="distanceValue" name="distance" class="form-control" type="text" value="<%= ride.rideInfo.distance%>">
         </td>
         <th scope="row">Service Type</th>
         <td>
@@ -124,18 +124,18 @@
           <td>
             <input name="model" class="form-control" type="text" value="<%= ride.car.model%>">
           </td>
-          <!-- <th scope="row">Base Charge Per Mile($)</th>
+          <!-- <th scope="row">Base Charge Per Mile($)</th> -->
           <td>
-            <input id="perMile" name="perMile" class="form-control carCost" type="number" value="<%= ride.car.charge.perMile.main%>">
-          </td> -->
+            <input id="perMile" name="perMile" class="form-control carCost" type="number" value="<%= ride.car.charge.perMile.main%>" hidden>
+          </td>
         </tr>
 
-        <!-- <tr>
-          <th scope="row">Vehicle Fee($)</th>
+        <tr>
+          <!-- <th scope="row">Vehicle Fee($)</th> -->
           <td>
-            <input id="vehicleFee" name="vehicleFee" class="form-control carCost" type="number" value="<%= ride.car.charge.vehicleFee%>">
+            <input id="vehicleFee" name="vehicleFee" class="form-control carCost" type="number" value="<%= ride.car.charge.vehicleFee%>" hidden>
           </td>
-        </tr> -->
+        </tr>
       </tbody>
     </table>
 
@@ -290,33 +290,33 @@
       <tr>
         <th scope="row">Per Mile($)</th>
         <td>
-          <input id="costPerMile" name="costPerMile" class="form-control col-md-6 cost" type="number" value="<%= ride.cost.perMile%>">
+          <input id="costPerMile" name="costPerMile" class="form-control col-md-6 cost" type="text" value="<%= ride.cost.perMile%>">
         </td>
         <th scope="row">Vehicle Fee($)</th>
         <td>
-          <input id="costVehicleFee" name="costVehicleFee" class="form-control col-md-6 cost" type="number" value="<%= ride.cost.vehicleFee %>">
+          <input id="costVehicleFee" name="costVehicleFee" class="form-control col-md-6 cost" type="text" value="<%= ride.cost.vehicleFee %>">
         </td>
       </tr>
 
       <tr>
         <th scope="row">Discount($)</th>
         <td>
-          <input id="discount" name="discount" class="form-control col-md-4 cost" type="number" value="<%= ride.cost.discount %>">
+          <input id="discount" name="discount" class="form-control col-md-4 cost" type="text" value="<%= ride.cost.discount %>">
         </td>
         <th scope="row">Stop Points (+$)</th>
         <td>
-          <input id="stopCharge" name="stopCharge" class="form-control col-md-4 cost" type="number" value="<%= ride.cost.stops%>">
+          <input id="stopCharge" name="stopCharge" class="form-control col-md-4 cost" type="text" value="<%= ride.cost.stops%>">
         </td>
       </tr>
 
       <tr>
         <th scope="row">Child Seats (+$)</th>
         <td>
-          <input id="childCharge" name="childCharge" class="form-control col-md-4 cost" type="number" value="<%= ride.cost.childSeats %>">
+          <input id="childCharge" name="childCharge" class="form-control col-md-4 cost" type="text" value="<%= ride.cost.childSeats %>">
         </td>
         <th scope="row">Early Morning (+$)</th>
         <td>
-          <input id="earlyCharge" name="earlyCharge" class="form-control col-md-4 cost" type="number" value="<%= ride.cost.earlyMorning %>">
+          <input id="earlyCharge" name="earlyCharge" class="form-control col-md-4 cost" type="text" value="<%= ride.cost.earlyMorning %>">
         </td>
 
       </tr>
