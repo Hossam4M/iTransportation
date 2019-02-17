@@ -26,8 +26,6 @@ const transporter = nodemailer.createTransport({
   tls: {rejectUnauthorized: false}
 });
 
-const confirmationList = [33000];
-
 // retrieve addons charge
 let addons_charges = [];
 let addonsDB = addonsModel.findOne({},(err,doc)=>{
@@ -96,7 +94,6 @@ router.post('/newRide/1',urlEncodedMid,function(request,response){
     stopsCost,childCost,earlyMorningCost
   }
 
-  console.log(request.session.costDetails);
 
   request.session.rideInfo = rideInfo;
 
@@ -204,8 +201,7 @@ router.post('/newRide/3/extend',urlEncodedMid,function(request,response){
   request.session.clientInfo = clientInfo;
 
   // random number starting from 330000
-  let confirmation = confirmationList[confirmationList.length - 1];
-  confirmationList.push(confirmation + 1);
+  let confirmation = Math.floor((Math.random() * 99999) + 10000);
 
   request.session.confirmation = confirmation;
 
